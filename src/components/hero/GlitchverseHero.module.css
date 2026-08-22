@@ -1492,7 +1492,7 @@
   }
 
   .heroGrid {
-    padding: 28px 18px 42px;
+    padding: 28px 12px 44px;
     grid-template-columns: 1fr;
     gap: 34px;
   }
@@ -1520,15 +1520,15 @@
   }
 
   .visual {
-    min-height: 370px;
+    min-height: 440px;
   }
 
   .monitorScene {
-    width: min(100%, 410px);
+    width: min(100%, 460px);
   }
 
   .monitor {
-    width: 90%;
+    width: 96%;
     box-shadow:
       inset 5px 5px 0 rgba(250, 235, 146, 0.14),
       inset -6px -6px 0 rgba(0, 0, 0, 0.16),
@@ -1600,7 +1600,7 @@
 
 @media (max-width: 430px) {
   .visual {
-    min-height: 330px;
+    min-height: 390px;
   }
 
   .screenContent strong {
