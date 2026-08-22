@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { ExperienceShell } from '@/components/intro/ExperienceShell';
 import { GlitchverseHero } from '@/components/hero/GlitchverseHero';
+import { SponsorSection } from "@/components/sponsor-section/SponsorSection";
 import { TimelineRoad } from '@/components/timeline/TimelineRoad';
 import { EventSections } from '@/components/sections/EventSections';
 import { BackgroundVideo } from '@/components/layout/BackgroundVideo';
@@ -12,15 +13,17 @@ export const metadata: Metadata = {
 
 export default function Home() {
   return (
-    <>
-      <BackgroundVideo />
+      <>
+    <BackgroundVideo />
       <ExperienceShell>
         <div className='flex min-h-screen flex-col bg-transparent'>
           <GlitchverseHero />
-          <TimelineRoad />
-          <EventSections />
-        </div>
-      </ExperienceShell>
-    </>
+        <SponsorSection />
+        <TimelineRoad />
+        <EventSections />
+      </div>
+    </ExperienceShell>
+      </>
+
   );
 }
