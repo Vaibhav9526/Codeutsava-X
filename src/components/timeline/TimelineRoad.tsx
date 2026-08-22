@@ -1,15 +1,23 @@
 'use client';
 
+import dynamic from 'next/dynamic';
 import React, { useState, useEffect, useRef } from 'react';
 import { TimelineEvent, TIMELINE_EVENTS } from '@/data/timelineEvents';
-import { TimelineCanvas3D } from './TimelineCanvas3D';
-import { WindowsXPDialog } from './WindowsXPDialog';
 import { retroAudio } from '@/utils/audioEffects';
-import { AnimatePresence, motion } from 'framer-motion';
 import {
   Volume2,
   VolumeX
 } from 'lucide-react';
+
+const TimelineCanvas3D = dynamic(
+  () => import('./TimelineCanvas3D').then(module => module.TimelineCanvas3D),
+  { ssr: false }
+);
+
+const WindowsXPDialog = dynamic(
+  () => import('./WindowsXPDialog').then(module => module.WindowsXPDialog),
+  { ssr: false }
+);
 
 interface GlitchTextProps {
   text: string;
@@ -42,9 +50,21 @@ export const TimelineRoad: React.FC = () => {
   const [selectedModalEvent, setSelectedModalEvent] = useState<TimelineEvent | null>(null);
   const [scrollProgress, setScrollProgress] = useState<number>(0);
   const [isMuted, setIsMuted] = useState<boolean>(retroAudio.getMuted());
+  const [isMobileTimeline, setIsMobileTimeline] = useState<boolean | null>(null);
+
+  useEffect(() => {
+    const media = window.matchMedia('(max-width: 767px), (hover: none) and (pointer: coarse)');
+    const updateMode = () => setIsMobileTimeline(media.matches);
+
+    updateMode();
+    media.addEventListener('change', updateMode);
+    return () => media.removeEventListener('change', updateMode);
+  }, []);
 
   // STICKY SCROLL PROGRESS TRACKING (Optimized with rAF & Threshold Deadband)
   useEffect(() => {
+    if (isMobileTimeline !== false) return;
+
     let ticking = false;
     let lastProgress = -1;
 
@@ -81,7 +101,7 @@ export const TimelineRoad: React.FC = () => {
     return () => {
       window.removeEventListener('scroll', handleScroll);
     };
-  }, []);
+  }, [isMobileTimeline]);
 
   const handleSelectEvent = React.useCallback((index: number) => {
     setActiveEventIndex(prev => prev === index ? prev : index);
@@ -98,8 +118,76 @@ export const TimelineRoad: React.FC = () => {
     if (!nextMuted) retroAudio.playXPDing();
   };
 
-  return (
-    // Tall sticky scroll container with smooth continuous road travel
+  const timelineContent = isMobileTimeline === null ? (
+    <section
+      id="timeline"
+      aria-busy="true"
+      className="grid min-h-[70svh] place-items-center bg-[#020104] px-6 text-center"
+    >
+      <p className="font-mono text-[10px] uppercase tracking-[0.24em] text-[#FAEB92]/55">
+        Loading timeline
+      </p>
+    </section>
+  ) : isMobileTimeline ? (
+    <section id="timeline" className="relative bg-[#020104] px-4 py-16 text-white">
+      <div className="mx-auto max-w-xl">
+        <header className="mb-9">
+          <p className="mb-3 font-mono text-[9px] uppercase tracking-[0.22em] text-[#FF5FCF]">
+            Event sequence // tap for details
+          </p>
+          <h2
+            className="text-[clamp(2.5rem,13vw,4.5rem)] font-black uppercase leading-[0.84] tracking-[-0.055em]"
+            style={{ fontFamily: '"Arial Narrow", "Helvetica Neue", Arial, sans-serif' }}
+          >
+            The <span className="text-[#FAEB92]">timeline</span>
+          </h2>
+          <p className="mt-5 max-w-md text-sm leading-6 text-white/60">
+            Follow every checkpoint on a fast, touch-friendly timeline built for smaller screens.
+          </p>
+        </header>
+
+        <ol className="grid gap-4">
+          {TIMELINE_EVENTS.map((event, index) => (
+            <li key={event.id}>
+              <button
+                type="button"
+                onClick={() => {
+                  handleSelectEvent(index);
+                  handleOpenDialog(event);
+                }}
+                className="relative min-h-36 w-full overflow-hidden rounded-2xl border bg-[#09050d] p-5 text-left transition-colors active:bg-[#100717]"
+                style={{ borderColor: `${event.accentColor}66` }}
+                aria-label={`Open details for ${event.title}`}
+              >
+                <span
+                  className="absolute inset-y-0 left-0 w-1"
+                  style={{ backgroundColor: event.accentColor }}
+                  aria-hidden="true"
+                />
+
+                <span className="mb-4 flex items-center justify-between gap-4 font-mono text-[9px] uppercase tracking-[0.14em]">
+                  <span style={{ color: event.accentColor }}>{event.stageCode}</span>
+                  <span className="text-white/50">{event.dateShort} · {event.time}</span>
+                </span>
+
+                <strong className="block text-lg font-extrabold leading-tight text-[#FAEB92]">
+                  {event.title}
+                </strong>
+                <span className="mt-2 block text-[13px] leading-5 text-white/60">
+                  {event.description}
+                </span>
+
+                <span className="mt-4 flex items-center justify-between gap-3 font-mono text-[9px] uppercase tracking-[0.12em]">
+                  <span className="text-white/50">{event.category}</span>
+                  <span style={{ color: event.accentColor }}>View details →</span>
+                </span>
+              </button>
+            </li>
+          ))}
+        </ol>
+      </div>
+    </section>
+  ) : (
     <section
       id="timeline"
       ref={stickyContainerRef}
@@ -107,7 +195,7 @@ export const TimelineRoad: React.FC = () => {
       style={{ height: `${(TIMELINE_EVENTS.length + 2) * 72}vh` }}
     >
       {/* FULLSCREEN PINNED STICKY VIEWPORT (100vw x 100vh) */}
-      <div className="sticky top-0 w-full h-screen overflow-hidden flex flex-col justify-between select-none">
+      <div className="sticky top-0 flex h-[100svh] w-full select-none flex-col justify-between overflow-hidden">
 
         {/* 1. FULL-BLEED 3D PERSPECTIVE CANVAS */}
         <TimelineCanvas3D
@@ -170,20 +258,17 @@ export const TimelineRoad: React.FC = () => {
         {/* Empty bottom spacer for pristine clean view */}
         <div className="relative z-40 w-full pointer-events-none pb-4" />
       </div>
+    </section>
+  );
 
-      {/* =========================================================================
-         CLICK-ACTIVATED WINDOWS XP POPUP MODAL
-         ========================================================================= */}
-      <AnimatePresence>
-        {selectedModalEvent && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.2 }}
+  return (
+    <>
+      {timelineContent}
+      {selectedModalEvent && (
+          <div
             onClick={() => setSelectedModalEvent(null)}
             role="presentation"
-            className="fixed inset-0 z-[10000] flex items-center justify-center p-4 bg-black/80 backdrop-blur-md cursor-pointer"
+            className={`fixed inset-0 z-[10000] flex cursor-pointer items-center justify-center bg-black/90 ${isMobileTimeline ? 'p-2' : 'p-4 backdrop-blur-md'}`}
           >
             <div
               onClick={(e) => e.stopPropagation()}
@@ -206,9 +291,8 @@ export const TimelineRoad: React.FC = () => {
                 }
               />
             </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </section>
+          </div>
+      )}
+    </>
   );
 };

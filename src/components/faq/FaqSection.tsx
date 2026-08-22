@@ -1,12 +1,18 @@
 'use client';
 
+import dynamic from 'next/dynamic';
 import { useState } from 'react';
-import AsciiFire from '@/components/originkit/ui/ascii-flame';
 import { FAQS } from '@/data/faqs';
+import { useRichEffects } from '@/hooks/useRichEffects';
 import styles from '../sections/EventSections.module.css';
+
+const AsciiFire = dynamic(() => import('@/components/originkit/ui/ascii-flame'), {
+  ssr: false,
+});
 
 export function FaqSection() {
   const [openFaq, setOpenFaq] = useState<number | null>(0);
+  const richEffects = useRichEffects();
 
   return (
     <section className={styles.faq} id='faq' aria-labelledby='faq-title'>
@@ -16,22 +22,24 @@ export function FaqSection() {
       </div>
 
       <div className={styles.faqPanel}>
-        <div className={styles.faqFlame} aria-hidden='true'>
-          <AsciiFire
-            intensity={96}
-            windDirection='right'
-            windForce={16}
-            decay={9}
-            turbulence={32}
-            thickness={3}
-            palette='custom'
-            shades={['#13021a', '#3a0b52', '#7218aa', '#9929ea', '#ff5fcf', '#faeb92']}
-            sparkColor='#faeb92'
-            charset='dense'
-            backgroundColor='transparent'
-            style={{ width: '100%', height: '100%' }}
-          />
-        </div>
+        {richEffects && (
+          <div className={styles.faqFlame} aria-hidden='true'>
+            <AsciiFire
+              intensity={96}
+              windDirection='right'
+              windForce={16}
+              decay={9}
+              turbulence={32}
+              thickness={3}
+              palette='custom'
+              shades={['#13021a', '#3a0b52', '#7218aa', '#9929ea', '#ff5fcf', '#faeb92']}
+              sparkColor='#faeb92'
+              charset='dense'
+              backgroundColor='transparent'
+              style={{ width: '100%', height: '100%' }}
+            />
+          </div>
+        )}
         <div className={styles.faqScrim} aria-hidden='true' />
 
         <div className={styles.faqPanelContent}>

@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useEffect, useState, type CSSProperties, type ReactNode } from "react";
+import { useEffect, useRef, useState, type CSSProperties, type ReactNode } from "react";
 import { GradientButton } from "@/components/ui/gradient-button";
 import styles from "./ExperienceShell.module.css";
 
@@ -11,9 +11,15 @@ export function ExperienceShell({ children }: { children: ReactNode }) {
   const [ready, setReady] = useState(false);
   const [entering, setEntering] = useState(false);
   const [entered, setEntered] = useState(false);
+  const compactModeRef = useRef(false);
 
   useEffect(() => {
-    const timer = window.setTimeout(() => setReady(true), 2350);
+    const compactQuery = window.matchMedia('(max-width: 760px), (hover: none) and (pointer: coarse)');
+    const reducedMotionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+    const compact = compactQuery.matches || reducedMotionQuery.matches;
+
+    compactModeRef.current = compact;
+    const timer = window.setTimeout(() => setReady(true), compact ? 700 : 2350);
     return () => window.clearTimeout(timer);
   }, []);
 
@@ -32,7 +38,7 @@ export function ExperienceShell({ children }: { children: ReactNode }) {
   const enter = () => {
     if (!ready || entering) return;
     setEntering(true);
-    window.setTimeout(() => setEntered(true), 1450);
+    window.setTimeout(() => setEntered(true), compactModeRef.current ? 420 : 1450);
   };
 
   return (

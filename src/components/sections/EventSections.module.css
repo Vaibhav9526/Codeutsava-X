@@ -529,6 +529,44 @@
 }
 
 @media (max-width: 600px) {
+  .faq,
+  .footer {
+    content-visibility: auto;
+  }
+
+  .faq {
+    padding: 64px 14px;
+    background:
+      radial-gradient(circle at 88% 18%, rgba(153, 41, 234, 0.16), transparent 34%),
+      #000000;
+    contain-intrinsic-size: 900px;
+  }
+
+  .faqPanel {
+    background:
+      radial-gradient(circle at 92% 18%, rgba(255, 95, 207, 0.09), transparent 35%),
+      #050207;
+    box-shadow: 8px 8px 0 rgba(153, 41, 234, 0.12);
+  }
+
+  .faqStatus,
+  .faqItem,
+  .socials {
+    backdrop-filter: none;
+  }
+
+  .open,
+  .open button,
+  .answer {
+    animation: none;
+  }
+
+  .footer {
+    min-height: 0;
+    padding: 52px 18px 20px;
+    contain-intrinsic-size: 780px;
+  }
+
   .tetrisField {
     inset: 0;
     opacity: 0.48;
@@ -542,7 +580,7 @@
   }
 
   .faqIntro h2 {
-    font-size: clamp(68px, 24vw, 104px);
+    font-size: clamp(62px, 22vw, 92px);
   }
 
   .faqPanel {
@@ -603,6 +641,7 @@
 
   .footerGrid {
     grid-template-columns: 1fr;
+    gap: 38px;
   }
 
   .about {

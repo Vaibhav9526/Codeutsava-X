@@ -1,9 +1,14 @@
 "use client";
 
+import dynamic from "next/dynamic";
 import { useEffect, useRef, type CSSProperties } from "react";
-import PrismGrid from "@/components/originkit/ui/prism-grid";
 import { Navbar } from "@/components/navbar/Navbar";
+import { useRichEffects } from "@/hooks/useRichEffects";
 import styles from "./GlitchverseHero.module.css";
+
+const PrismGrid = dynamic(() => import("@/components/originkit/ui/prism-grid"), {
+  ssr: false,
+});
 
 type HeroStyle = CSSProperties & {
   "--pointer-x": string;
@@ -33,9 +38,10 @@ const initialHeroStyle: HeroStyle = {
 
 export function GlitchverseHero() {
   const heroRef = useRef<HTMLElement>(null);
+  const richEffects = useRichEffects();
 
   useEffect(() => {
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    if (!richEffects) return;
 
     const target = { x: 0, y: 0 };
     const current = { x: 0, y: 0 };
@@ -81,7 +87,7 @@ export function GlitchverseHero() {
       window.removeEventListener("pointermove", moveMonitor);
       if (animationFrame) cancelAnimationFrame(animationFrame);
     };
-  }, []);
+  }, [richEffects]);
 
   return (
     <main
@@ -90,22 +96,24 @@ export function GlitchverseHero() {
       ref={heroRef}
       style={initialHeroStyle}
     >
-      <div className={styles.prismBackdrop} aria-hidden="true">
-        <PrismGrid
-          backgroundColor="transparent"
-          boxSize={62}
-          borderWidth={1}
-          borderColor="rgba(153, 41, 234, 0.28)"
-          rotate={{ x: -10, y: 7 }}
-          colors={{
-            paletteCount: 4,
-            color1: "#000000",
-            color2: "#9929EA",
-            color3: "#FF5FCF",
-            color4: "#FAEB92",
-          }}
-        />
-      </div>
+      {richEffects && (
+        <div className={styles.prismBackdrop} aria-hidden="true">
+          <PrismGrid
+            backgroundColor="transparent"
+            boxSize={62}
+            borderWidth={1}
+            borderColor="rgba(153, 41, 234, 0.28)"
+            rotate={{ x: -10, y: 7 }}
+            colors={{
+              paletteCount: 4,
+              color1: "#000000",
+              color2: "#9929EA",
+              color3: "#FF5FCF",
+              color4: "#FAEB92",
+            }}
+          />
+        </div>
+      )}
       <div className={styles.noise} aria-hidden="true" />
       <div className={styles.cursorGlow} aria-hidden="true" />
 

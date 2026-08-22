@@ -1464,6 +1464,9 @@
   .hero {
     min-height: 100svh;
     overflow-y: auto;
+    background:
+      radial-gradient(circle at 74% 58%, rgba(153, 41, 234, 0.18), transparent 35%),
+      #000000;
   }
 
   .navbar {
@@ -1480,6 +1483,7 @@
     font-size: 9px;
     letter-spacing: 0.08em;
     scrollbar-width: none;
+    touch-action: pan-x;
     white-space: nowrap;
   }
 
@@ -1488,18 +1492,18 @@
   }
 
   .heroGrid {
-    padding: 42px 22px 54px;
+    padding: 28px 18px 42px;
     grid-template-columns: 1fr;
-    gap: 56px;
+    gap: 34px;
   }
 
   .kicker {
-    margin-bottom: 28px;
+    margin-bottom: 20px;
     font-size: 8px;
   }
 
   .title {
-    font-size: clamp(54px, 16vw, 82px);
+    font-size: clamp(46px, 15vw, 72px);
   }
 
   .title>span:nth-child(2) {
@@ -1508,7 +1512,7 @@
 
   .copyFooter {
     max-width: none;
-    margin-top: 36px;
+    margin-top: 24px;
   }
 
   .copyFooter p {
@@ -1516,15 +1520,66 @@
   }
 
   .visual {
-    min-height: 470px;
+    min-height: 370px;
   }
 
   .monitorScene {
-    width: min(100%, 470px);
+    width: min(100%, 410px);
   }
 
   .monitor {
-    width: 88%;
+    width: 90%;
+    box-shadow:
+      inset 5px 5px 0 rgba(250, 235, 146, 0.14),
+      inset -6px -6px 0 rgba(0, 0, 0, 0.16),
+      14px 18px 30px rgba(0, 0, 0, 0.42),
+      3px 0 0 #4d1475;
+    will-change: auto;
+  }
+
+  .monitorRig {
+    transform: rotateZ(1deg);
+    transition: none;
+    will-change: auto;
+  }
+
+  .screenGrid,
+  .screenContent {
+    transform: none;
+    transition: none;
+  }
+
+  .monitorFloat,
+  .monitor,
+  .screen,
+  .screen::before,
+  .scanlines,
+  .screenContent,
+  .screenHeadline::before,
+  .screenHeadline::after,
+  .editionXo,
+  .editionTen,
+  .editionDas {
+    animation: none;
+  }
+
+  .prismBackdrop,
+  .cursorGlow,
+  .monitorOrbit,
+  .screenSweep,
+  .glitchBands,
+  .glitchNoise,
+  .signalLoss,
+  .crosshair,
+  .monitorShadow,
+  .codeFragment {
+    display: none;
+  }
+
+  .screen {
+    box-shadow:
+      inset 0 0 24px 6px #000000,
+      0 0 18px rgba(255, 95, 207, 0.18);
   }
 
   .dragHint {
@@ -1541,15 +1596,11 @@
     display: none;
   }
 
-  .prismBackdrop {
-    inset: -8%;
-    opacity: 0.22;
-  }
 }
 
 @media (max-width: 430px) {
   .visual {
-    min-height: 400px;
+    min-height: 330px;
   }
 
   .screenContent strong {
