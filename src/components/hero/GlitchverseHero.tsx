@@ -130,11 +130,19 @@ export function GlitchverseHero() {
               CodeUtsava X is the 10th edition of NIT Raipur&apos;s flagship
               technology celebration&mdash;uniting students and developers to build, learn, compete, and reimagine what technology can do.
             </p>
-
           </div>
         </div>
 
         <div className={styles.visual} id="signal" aria-label="Interactive CRT transmission">
+          <div className="flex flex-wrap items-center justify-center gap-6 mb-10 z-10">
+            <button className="gradient-button px-10 py-4 rounded font-mono font-bold text-sm tracking-widest text-white transition-transform hover:scale-105 active:scale-95">
+              REGISTER
+            </button>
+            <button className="gradient-button-variant px-10 py-4 rounded font-mono font-bold text-sm tracking-widest text-white transition-transform hover:scale-105 active:scale-95">
+              COMING SOON
+            </button>
+          </div>
+
           <span className={`${styles.codeFragment} ${styles.fragmentOne}`} aria-hidden="true">
             EDITION//10
           </span>

@@ -4,6 +4,7 @@ import { GlitchverseHero } from '@/components/hero/GlitchverseHero';
 import { SponsorSection } from "@/components/sponsor-section/SponsorSection";
 import { TimelineRoad } from '@/components/timeline/TimelineRoad';
 import { EventSections } from '@/components/sections/EventSections';
+import { BackgroundVideo } from '@/components/layout/BackgroundVideo';
 
 export const metadata: Metadata = {
   title: 'Codeutsava X.0 - Build Beyond the Screen',
@@ -12,6 +13,7 @@ export const metadata: Metadata = {
 
 export default function Home() {
   return (
+    
     <ExperienceShell>
       <div className='flex min-h-screen flex-col bg-black'>
         <GlitchverseHero />
@@ -20,5 +22,6 @@ export default function Home() {
         <EventSections />
       </div>
     </ExperienceShell>
+
   );
 }

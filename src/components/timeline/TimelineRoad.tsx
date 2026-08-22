@@ -103,7 +103,7 @@ export const TimelineRoad: React.FC = () => {
     <section
       id="timeline"
       ref={stickyContainerRef}
-      className="relative w-full bg-[#020104]"
+      className="relative w-full bg-transparent"
       style={{ height: `${(TIMELINE_EVENTS.length + 2) * 72}vh` }}
     >
       {/* FULLSCREEN PINNED STICKY VIEWPORT (100vw x 100vh) */}
