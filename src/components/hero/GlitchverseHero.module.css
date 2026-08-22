@@ -1473,10 +1473,18 @@
 
   .navLinks {
     width: 100%;
-    justify-content: space-between;
+    padding-inline: 12px;
+    justify-content: flex-start;
     gap: 12px;
+    overflow-x: auto;
     font-size: 9px;
     letter-spacing: 0.08em;
+    scrollbar-width: none;
+    white-space: nowrap;
+  }
+
+  .navLinks::-webkit-scrollbar {
+    display: none;
   }
 
   .heroGrid {
