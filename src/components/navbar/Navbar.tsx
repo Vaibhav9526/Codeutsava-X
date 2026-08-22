@@ -3,16 +3,6 @@ import styles from '../hero/GlitchverseHero.module.css';
 export function Navbar() {
   return (
     <header className={styles.navbar}>
-      <a className={styles.brand} href='#top' aria-label='CodeUtsava X home'>
-        <span className={styles.brandGlyph} aria-hidden='true'>
-          C<span>/</span>U
-        </span>
-        <span className={styles.brandText}>
-          CODEUTSAVA
-          <small>TENTH EDITION</small>
-        </span>
-      </a>
-
       <nav className={styles.navLinks} aria-label='Primary navigation'>
         <a href='#brief'>THE BRIEF</a>
         <a href='#signal'>THE SIGNAL</a>

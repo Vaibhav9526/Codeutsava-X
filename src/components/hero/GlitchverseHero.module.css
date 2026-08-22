@@ -109,56 +109,8 @@
   box-shadow: -64px 0 0 var(--purple);
 }
 
-.brand {
-  min-width: 0;
-  justify-self: start;
-  display: inline-flex;
-  align-items: center;
-  gap: 12px;
-  text-decoration: none;
-}
-
-.brandGlyph {
-  width: 44px;
-  aspect-ratio: 1;
-  border: 1px solid var(--lime);
-  display: grid;
-  place-items: center;
-  flex: 0 0 auto;
-  background: rgba(153, 41, 234, 0.16);
-  color: var(--bone);
-  box-shadow: inset 4px 0 0 var(--lime);
-  font-family: var(--font-body);
-  font-size: 17px;
-  font-weight: 900;
-  line-height: 1;
-  letter-spacing: -0.08em;
-}
-
-.brandGlyph span {
-  color: var(--lime);
-}
-
-.brandText {
-  display: grid;
-  color: var(--bone);
-  font-family: var(--font-body);
-  font-size: 14px;
-  font-weight: 900;
-  letter-spacing: 0.12em;
-  line-height: 1;
-}
-
-.brandText small {
-  margin-top: 6px;
-  color: rgba(250, 235, 146, 0.55);
-  font-family: var(--font-body);
-  font-size: 7px;
-  font-weight: 800;
-  letter-spacing: 0.24em;
-}
-
 .navLinks {
+  grid-column: 2;
   border: 1px solid rgba(250, 235, 146, 0.2);
   display: flex;
   align-items: stretch;
@@ -190,6 +142,7 @@
 }
 
 .navCta {
+  grid-column: 3;
   justify-self: end;
   min-height: 48px;
   padding: 0 20px;
@@ -1583,6 +1536,10 @@
     display: none;
   }
 
+  .navCta {
+    grid-column: 2;
+  }
+
   .heroGrid {
     grid-template-columns: minmax(0, 0.88fr) minmax(360px, 1.12fr);
     gap: 32px;
@@ -1619,19 +1576,6 @@
     right: 20px;
     width: 42px;
     box-shadow: -48px 0 0 var(--purple);
-  }
-
-  .brand {
-    gap: 9px;
-  }
-
-  .brandGlyph {
-    width: 38px;
-    box-shadow: inset 3px 0 0 var(--lime);
-  }
-
-  .brandText {
-    font-size: 11px;
   }
 
   .navCta {
@@ -1705,10 +1649,6 @@
 }
 
 @media (max-width: 430px) {
-  .brandText {
-    display: none;
-  }
-
   .visual {
     min-height: 400px;
   }
