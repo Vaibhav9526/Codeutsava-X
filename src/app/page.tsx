@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { ExperienceShell } from '@/components/intro/ExperienceShell';
 import { GlitchverseHero } from '@/components/hero/GlitchverseHero';
+import { SponsorSection } from "@/components/sponsor-section/SponsorSection";
 import { TimelineRoad } from '@/components/timeline/TimelineRoad';
 import { EventSections } from '@/components/sections/EventSections';
 
@@ -14,6 +15,7 @@ export default function Home() {
     <ExperienceShell>
       <div className='flex min-h-screen flex-col bg-black'>
         <GlitchverseHero />
+        <SponsorSection />
         <TimelineRoad />
         <EventSections />
       </div>
