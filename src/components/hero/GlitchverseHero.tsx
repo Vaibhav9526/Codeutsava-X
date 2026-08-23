@@ -3,6 +3,7 @@
 import dynamic from "next/dynamic";
 import { useEffect, useRef, type CSSProperties } from "react";
 import { Navbar } from "@/components/navbar/Navbar";
+import EncryptButton from "@/components/originkit/ui/encrypt-button";
 import { useRichEffects } from "@/hooks/useRichEffects";
 import styles from "./GlitchverseHero.module.css";
 
@@ -143,9 +144,26 @@ export function GlitchverseHero() {
 
         <div className={styles.visual} id="signal" aria-label="CodeUtsava identity transmission">
           <div className={`${styles.heroActions} flex flex-wrap items-center justify-center gap-6 mb-10 z-10`}>
-            <button className="gradient-button px-10 py-4 rounded font-mono font-bold text-sm tracking-widest text-white transition-transform hover:scale-105 active:scale-95">
-              REGISTER
-            </button>
+            <EncryptButton
+              label="REGISTER"
+              sweep={false}
+              fill="#faeb92"
+              textColor="#000000"
+              hoverTextColor="#9929ea"
+              paddingX={40}
+              paddingY={16}
+              rounded={4}
+              border
+              borderOptions={{ color: "#ff5fcf", width: 1 }}
+              font={{
+                fontFamily: "var(--font-body)",
+                fontSize: 16,
+                fontWeight: 900,
+                letterSpacing: "0.08em",
+                lineHeight: 1,
+              }}
+              scrambleOptions={{ speed: 95, cycles: 8 }}
+            />
             <button className="gradient-button-variant px-10 py-4 rounded font-mono font-bold text-sm tracking-widest text-white transition-transform hover:scale-105 active:scale-95">
               COMING SOON
             </button>

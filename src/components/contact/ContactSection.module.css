@@ -403,7 +403,7 @@
   .contactLayout {
     grid-template-columns: 1fr;
   }
-  
+
   .contactIntro {
     grid-template-columns: 1fr;
     gap: 12px;
