@@ -8,11 +8,27 @@ import styles from "./ExperienceShell.module.css";
 const GLYPHS = [..."CODEUTSAVA", " ", ..."X", ".O"];
 
 export function ExperienceShell({ children }: { children: ReactNode }) {
-  const [ready, setReady] = useState(false);
+  const [entered, setEntered] = useState<boolean>(() => {
+    if (typeof window !== "undefined") {
+      return (
+        sessionStorage.getItem("glitchverse_entered") === "true" ||
+        new URLSearchParams(window.location.search).get("skipIntro") === "true"
+      );
+    }
+    return false;
+  });
+  const [ready, setReady] = useState(() => entered);
   const [entering, setEntering] = useState(false);
-  const [entered, setEntered] = useState(false);
 
   useEffect(() => {
+    if (typeof window !== "undefined") {
+      const urlParams = new URLSearchParams(window.location.search);
+      if (urlParams.get("skipIntro") === "true" || sessionStorage.getItem("glitchverse_entered") === "true") {
+        setReady(true);
+        setEntered(true);
+        return;
+      }
+    }
     const timer = window.setTimeout(() => setReady(true), 2350);
     return () => window.clearTimeout(timer);
   }, []);
@@ -32,6 +48,9 @@ export function ExperienceShell({ children }: { children: ReactNode }) {
   const enter = () => {
     if (!ready || entering) return;
     setEntering(true);
+    if (typeof window !== "undefined") {
+      sessionStorage.setItem("glitchverse_entered", "true");
+    }
     window.setTimeout(() => setEntered(true), 1450);
   };
 

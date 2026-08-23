@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect, useRef } from "react";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import { Menu, X } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { gsap } from "gsap";
@@ -38,64 +39,55 @@ function smoothScrollTo(targetSelector: string) {
   }
 }
 
-const NavItem = ({
-  children,
-  href,
-  delay = 0,
-  target,
-}: {
-  children: React.ReactNode;
+interface NavItemProps {
   href: string;
+  children: React.ReactNode;
   delay?: number;
   target?: string;
+}
+
+const NavItem: React.FC<NavItemProps> = ({
+  href,
+  children,
+  delay = 0,
+  target,
 }) => {
   const containerRef = useRef<HTMLAnchorElement>(null);
-
-  useEffect(() => {
-    if (typeof window !== "undefined") {
-      gsap.registerPlugin(EasePack);
-    }
-  }, []);
+  const router = useRouter();
 
   useEffect(() => {
     if (!containerRef.current) return;
-    const container = containerRef.current;
-
-    const purpleRects = gsap.utils.toArray(".purple-rect", container);
-    const pinkRects = gsap.utils.toArray(".pink-rect", container);
-
-    gsap.set(purpleRects, { xPercent: -100 });
-    gsap.set(pinkRects, { xPercent: -100 });
+    const purpleRects = containerRef.current.querySelectorAll(".purple-rect");
+    const pinkRects = containerRef.current.querySelectorAll(".pink-rect");
+    gsap.set([purpleRects, pinkRects], { xPercent: -100 });
   }, []);
 
   const handleMouseEnter = () => {
     if (!containerRef.current) return;
-    const container = containerRef.current;
-    const purpleRects = gsap.utils.shuffle(gsap.utils.toArray(".purple-rect", container));
-    const pinkRects = gsap.utils.shuffle(gsap.utils.toArray(".pink-rect", container));
+    const purpleRects = containerRef.current.querySelectorAll(".purple-rect");
+    const pinkRects = containerRef.current.querySelectorAll(".pink-rect");
 
     gsap.to(purpleRects, {
-      duration: 0.4,
-      ease: "rough({ template: none.out, strength: 5, points: 15, taper: none, randomize: false, clamp: false })",
-      xPercent: 100,
-      stagger: 0.03,
+      duration: 0.5,
+      ease: "rough({ template: none.out, strength: 4, points: 20, taper: none, randomize: false, clamp: false })",
+      xPercent: 0,
+      stagger: 0.02,
       overwrite: true,
     });
 
     gsap.to(pinkRects, {
-      duration: 0.4,
-      ease: "rough({ template: none.out, strength: 5, points: 15, taper: none, randomize: false, clamp: false })",
-      xPercent: 100,
-      stagger: 0.01,
+      duration: 0.5,
+      ease: "rough({ template: none.out, strength: 4, points: 20, taper: none, randomize: false, clamp: false })",
+      xPercent: 0,
+      stagger: 0.04,
       overwrite: true,
     });
   };
 
   const handleMouseLeave = () => {
     if (!containerRef.current) return;
-    const container = containerRef.current;
-    const purpleRects = gsap.utils.shuffle(gsap.utils.toArray(".purple-rect", container));
-    const pinkRects = gsap.utils.shuffle(gsap.utils.toArray(".pink-rect", container));
+    const purpleRects = containerRef.current.querySelectorAll(".purple-rect");
+    const pinkRects = containerRef.current.querySelectorAll(".pink-rect");
 
     gsap.to(purpleRects, {
       duration: 0.4,
@@ -118,11 +110,26 @@ const NavItem = ({
     if (target === "_blank") {
       return;
     }
-    if (!href.startsWith("#")) {
+    if (href.startsWith("/")) {
+      e.preventDefault();
+      if (typeof window !== "undefined") {
+        sessionStorage.setItem("glitchverse_entered", "true");
+      }
+      router.push(href);
       return;
     }
-    e.preventDefault();
-    smoothScrollTo(href);
+    if (href.startsWith("#")) {
+      if (typeof window !== "undefined" && window.location.pathname !== "/") {
+        e.preventDefault();
+        if (typeof window !== "undefined") {
+          sessionStorage.setItem("glitchverse_entered", "true");
+        }
+        router.push(`/${href}`);
+        return;
+      }
+      e.preventDefault();
+      smoothScrollTo(href);
+    }
   };
 
   const slices = 5;
@@ -217,28 +224,51 @@ const MobileNavLink = ({
   href: string;
   children: React.ReactNode;
   setMobileOpen: (open: boolean) => void;
-}) => (
-  <a
-    href={href}
-    onClick={(e) => {
-      if (href.startsWith("#")) {
-        e.preventDefault();
-        smoothScrollTo(href);
-      }
-      setMobileOpen(false);
-    }}
-    className="block w-full px-6 py-4 text-[12px] font-black tracking-[0.15em] text-[#faeb92] border-b border-[#faeb9220] hover:bg-[#faeb9220] transition-colors uppercase text-center"
-    style={{
-      fontFamily: "var(--font-body)",
-    }}
-  >
-    {children}
-  </a>
-);
+}) => {
+  const router = useRouter();
 
-export function Navbar() {
+  return (
+    <a
+      href={href}
+      onClick={(e) => {
+        if (href.startsWith("/")) {
+          e.preventDefault();
+          if (typeof window !== "undefined") {
+            sessionStorage.setItem("glitchverse_entered", "true");
+          }
+          router.push(href);
+          setMobileOpen(false);
+          return;
+        }
+        if (href.startsWith("#")) {
+          if (typeof window !== "undefined" && window.location.pathname !== "/") {
+            e.preventDefault();
+            if (typeof window !== "undefined") {
+              sessionStorage.setItem("glitchverse_entered", "true");
+            }
+            router.push(`/${href}`);
+            setMobileOpen(false);
+            return;
+          }
+          e.preventDefault();
+          smoothScrollTo(href);
+        }
+        setMobileOpen(false);
+      }}
+      className="block w-full px-6 py-4 text-[12px] font-black tracking-[0.15em] text-[#faeb92] border-b border-[#faeb9220] hover:bg-[#faeb9220] transition-colors uppercase text-center"
+      style={{
+        fontFamily: "var(--font-body)",
+      }}
+    >
+      {children}
+    </a>
+  );
+};
+
+export function Navbar({ variant = 'default' }: { variant?: 'default' | 'back-to-home' }) {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [isLargeScreen, setIsLargeScreen] = useState(true);
+  const router = useRouter();
 
   useEffect(() => {
     const checkScreen = () => {
@@ -253,6 +283,8 @@ export function Navbar() {
       window.removeEventListener("resize", checkScreen);
     };
   }, []);
+
+  const isBackToHome = variant === 'back-to-home';
 
   return (
     <>
@@ -277,11 +309,19 @@ export function Navbar() {
           ) : (
             <>
               <a
-                href="#top"
+                href={isBackToHome ? "/?skipIntro=true" : "#top"}
                 aria-label="CodeUtsava home"
                 onClick={(e) => {
-                  e.preventDefault();
-                  smoothScrollTo("#top");
+                  if (isBackToHome) {
+                    e.preventDefault();
+                    if (typeof window !== "undefined") {
+                      sessionStorage.setItem("glitchverse_entered", "true");
+                    }
+                    router.push("/?skipIntro=true");
+                  } else {
+                    e.preventDefault();
+                    smoothScrollTo("#top");
+                  }
                 }}
               >
                 <Image
@@ -307,30 +347,46 @@ export function Navbar() {
             className={styles.navLinks}
             aria-label="Primary navigation"
           >
-            <NavItem href="#top" delay={0.2}>
-              HOME
-            </NavItem>
-            <NavItem href="#about" delay={0.3}>
-              ABOUT US
-            </NavItem>
-            <NavItem href="#faq" delay={0.4}>
-              FAQ
-            </NavItem>
-            <NavItem href="#contact" delay={0.5}>
-              CONTACT US
-            </NavItem>
-            <NavItem href="/team" delay={0.6}>
-              TEAM
-            </NavItem>
+            {isBackToHome ? (
+              <NavItem href="/?skipIntro=true" delay={0.2}>
+                BACK TO HOME
+              </NavItem>
+            ) : (
+              <>
+                <NavItem href="#top" delay={0.2}>
+                  HOME
+                </NavItem>
+                <NavItem href="#about" delay={0.3}>
+                  ABOUT US
+                </NavItem>
+                <NavItem href="#faq" delay={0.4}>
+                  FAQ
+                </NavItem>
+                <NavItem href="/contact-us" delay={0.5}>
+                  CONTACT US
+                </NavItem>
+                <NavItem href="/team" delay={0.6}>
+                  TEAM
+                </NavItem>
+              </>
+            )}
           </nav>
         ) : (
           <div className="flex items-center justify-center">
             <a
-              href="#top"
+              href={isBackToHome ? "/?skipIntro=true" : "#top"}
               aria-label="CodeUtsava home"
               onClick={(e) => {
-                e.preventDefault();
-                smoothScrollTo("#top");
+                if (isBackToHome) {
+                  e.preventDefault();
+                  if (typeof window !== "undefined") {
+                    sessionStorage.setItem("glitchverse_entered", "true");
+                  }
+                  router.push("/?skipIntro=true");
+                } else {
+                  e.preventDefault();
+                  smoothScrollTo("#top");
+                }
                 setMobileOpen(false);
               }}
             >
@@ -423,31 +479,38 @@ export function Navbar() {
             }}
           >
             <div className="flex flex-col font-sans">
+              {isBackToHome ? (
+                <MobileNavLink href="/?skipIntro=true" setMobileOpen={setMobileOpen}>
+                  BACK TO HOME
+                </MobileNavLink>
+              ) : (
+                <>
+                  {/* HOME */}
+                  <MobileNavLink href="#top" setMobileOpen={setMobileOpen}>
+                    HOME
+                  </MobileNavLink>
 
-              {/* HOME */}
-              <MobileNavLink href="#top" setMobileOpen={setMobileOpen}>
-                HOME
-              </MobileNavLink>
+                  {/* ABOUT US */}
+                  <MobileNavLink href="#about" setMobileOpen={setMobileOpen}>
+                    ABOUT US
+                  </MobileNavLink>
 
-              {/* ABOUT US */}
-              <MobileNavLink href="#about" setMobileOpen={setMobileOpen}>
-                ABOUT US
-              </MobileNavLink>
+                  {/* FAQ */}
+                  <MobileNavLink href="#faq" setMobileOpen={setMobileOpen}>
+                    FAQ
+                  </MobileNavLink>
 
-              {/* FAQ */}
-              <MobileNavLink href="#faq" setMobileOpen={setMobileOpen}>
-                FAQ
-              </MobileNavLink>
+                  {/* CONTACT US */}
+                  <MobileNavLink href="/contact-us" setMobileOpen={setMobileOpen}>
+                    CONTACT US
+                  </MobileNavLink>
 
-              {/* CONTACT US */}
-              <MobileNavLink href="#contact" setMobileOpen={setMobileOpen}>
-                CONTACT US
-              </MobileNavLink>
-
-              {/* TEAM */}
-              <MobileNavLink href="/team" setMobileOpen={setMobileOpen}>
-                TEAM
-              </MobileNavLink>
+                  {/* TEAM */}
+                  <MobileNavLink href="/team" setMobileOpen={setMobileOpen}>
+                    TEAM
+                  </MobileNavLink>
+                </>
+              )}
 
               {/* COMMUNITY CTA */}
               <a
