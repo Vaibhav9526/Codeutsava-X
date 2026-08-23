@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Unlock, RotateCcw } from 'lucide-react';
 import { CyberLootboxIcon } from './CyberLootboxIcon';
@@ -44,10 +44,7 @@ function ScrambleGlitchText({
   const [displayText, setDisplayText] = useState(text);
 
   useEffect(() => {
-    if (!isHovered) {
-      setDisplayText(text);
-      return;
-    }
+    if (!isHovered) return;
 
     const interval = setInterval(() => {
       const scrambled = text
@@ -66,7 +63,7 @@ function ScrambleGlitchText({
     return () => clearInterval(interval);
   }, [isHovered, text]);
 
-  return <span className={className}>{displayText}</span>;
+  return <span className={className}>{isHovered ? displayText : text}</span>;
 }
 
 export function ShortlistedTeams() {
