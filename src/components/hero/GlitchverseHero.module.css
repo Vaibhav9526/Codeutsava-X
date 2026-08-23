@@ -70,92 +70,26 @@
   z-index: 20;
   height: 60px;
   margin: 12px clamp(24px, 4vw, 72px) 0;
-  padding: 0 18px;
-  border-block: 1px solid rgba(250, 235, 146, 0.28);
+  padding-inline: clamp(10px, 1.5vw, 18px);
   display: grid;
-  grid-template-columns: 1fr auto 1fr;
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
   align-items: center;
-  gap: 28px;
-  background:
-    linear-gradient(90deg, rgba(255, 95, 207, 0.09), transparent 18% 82%, rgba(153, 41, 234, 0.12)),
-    rgba(0, 0, 0, 0.92);
-  box-shadow:
-    inset 4px 0 0 var(--lime),
-    inset -4px 0 0 var(--purple),
-    0 18px 44px rgba(0, 0, 0, 0.38);
+  gap: clamp(12px, 2vw, 28px);
 }
 
-.navbar::before,
-.navbar::after {
-  content: "";
-  position: absolute;
-  height: 3px;
-  pointer-events: none;
-}
-
-.navbar::before {
-  top: -1px;
-  left: 64px;
-  width: 88px;
-  background: var(--lime);
-  box-shadow: 0 0 15px rgba(255, 95, 207, 0.72);
-}
-
-.navbar::after {
-  right: 32px;
-  bottom: -1px;
-  width: 58px;
-  background: var(--bone);
-  box-shadow: -64px 0 0 var(--purple);
-}
-
-.brand {
+.navbar > :first-child {
   min-width: 0;
   justify-self: start;
-  display: inline-flex;
-  align-items: center;
-  gap: 12px;
-  text-decoration: none;
 }
 
-.brandGlyph {
-  width: 44px;
-  aspect-ratio: 1;
-  border: 1px solid var(--lime);
-  display: grid;
-  place-items: center;
-  flex: 0 0 auto;
-  background: rgba(153, 41, 234, 0.16);
-  color: var(--bone);
-  box-shadow: inset 4px 0 0 var(--lime);
-  font-family: var(--font-body);
-  font-size: 17px;
-  font-weight: 900;
-  line-height: 1;
-  letter-spacing: -0.08em;
+.navbar > :nth-child(2) {
+  min-width: 0;
+  justify-self: center;
 }
 
-.brandGlyph span {
-  color: var(--lime);
-}
-
-.brandText {
-  display: grid;
-  color: var(--bone);
-  font-family: var(--font-body);
-  font-size: 14px;
-  font-weight: 900;
-  letter-spacing: 0.12em;
-  line-height: 1;
-}
-
-.brandText small {
-  margin-top: 6px;
-  color: rgba(250, 235, 146, 0.55);
-  font-family: var(--font-body);
-  font-size: 7px;
-  font-weight: 800;
-  letter-spacing: 0.24em;
+.navbar > :last-child {
+  min-width: 0;
+  justify-self: end;
 }
 
 .navLinks {
@@ -176,13 +110,30 @@
   background: transparent;
   border: none;
   text-decoration: none;
-  transition: color 160ms ease;
+  transition: color 180ms ease;
+}
+
+.navLinks a::after {
+  content: "";
+  position: absolute;
+  right: 16px;
+  bottom: 2px;
+  left: 16px;
+  height: 2px;
+  background: var(--pink);
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform 180ms ease;
 }
 
 .navLinks a:hover,
 .navLinks a:focus-visible {
-  color: var(--bone);
-  text-shadow: 0 0 8px rgba(250, 235, 146, 0.5);
+  color: var(--pink);
+}
+
+.navLinks a:hover::after,
+.navLinks a:focus-visible::after {
+  transform: scaleX(1);
 }
 
 .navButton a {
@@ -190,59 +141,11 @@
   background: rgba(0, 0, 0, 0.6);
   border: 1px solid rgba(250, 235, 146, 0.25);
   border-radius: 2px;
-  transition:
-    background-color 160ms ease,
-    color 160ms ease,
-    border-color 160ms ease;
 }
 
-.navButton a:hover,
-.navButton a:focus-visible {
-  background: var(--bone);
-  color: var(--black);
-  border-color: var(--bone);
-  text-shadow: none;
-}
-
-.navCta {
-  justify-self: end;
-  min-height: 48px;
-  padding: 0 20px;
-  border: 0;
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-  background: var(--lime);
-  color: var(--black);
-  clip-path: polygon(0 0, calc(100% - 11px) 0, 100% 11px, 100% 100%, 11px 100%, 0 calc(100% - 11px));
-  font-family: var(--font-body);
-  font-size: 9px;
-  font-weight: 900;
-  letter-spacing: 0.12em;
-  text-decoration: none;
-  transition:
-    background-color 160ms ease,
-    transform 160ms ease;
-}
-
-.navCta:hover,
-.navCta:focus-visible {
-  background: var(--bone);
-  color: var(--black);
-  transform: translateY(-2px);
-}
-
-.liveDot {
-  width: 7px;
-  height: 7px;
-  border: 2px solid var(--black);
-  background: transparent;
-  animation: pulse 1.8s ease-in-out infinite;
-}
-
-.navCta:hover .liveDot,
-.navCta:focus-visible .liveDot {
-  background: var(--black);
+.navButton a::after {
+  right: 24px;
+  left: 24px;
 }
 
 .heroGrid {
@@ -373,6 +276,10 @@
   flex-direction: column;
   justify-content: center;
   align-items: flex-end;
+}
+
+.mobileWordmark {
+  display: none;
 }
 
 .monitorScene {
@@ -979,20 +886,6 @@
   font-family: var(--font-brand);
   font-size: 10px;
   letter-spacing: 0.06em;
-}
-
-@keyframes pulse {
-
-  0%,
-  100% {
-    opacity: 0.45;
-    transform: scale(0.8);
-  }
-
-  50% {
-    opacity: 1;
-    transform: scale(1.15);
-  }
 }
 
 @keyframes screenFlicker {
@@ -1606,9 +1499,240 @@
   }
 }
 
+@keyframes mobileBrandGlitch {
+  0%,
+  20%,
+  24%,
+  45%,
+  49%,
+  70%,
+  74%,
+  95%,
+  100% {
+    transform: translate(0) skewX(0);
+  }
+
+  21%,
+  46%,
+  71%,
+  96% {
+    transform: translateX(-4px) skewX(2deg);
+  }
+
+  22%,
+  47%,
+  72%,
+  97% {
+    transform: translateX(5px) skewX(-2deg);
+  }
+
+  23%,
+  48%,
+  73%,
+  98% {
+    transform: translateX(-2px) skewX(1deg);
+  }
+}
+
+@keyframes mobileGhostTop {
+  0%,
+  19%,
+  24%,
+  44%,
+  49%,
+  69%,
+  74%,
+  94%,
+  100% {
+    opacity: 0;
+    transform: translateX(0);
+  }
+
+  20%,
+  45%,
+  70%,
+  95% {
+    opacity: 0.62;
+    transform: translateX(-5px);
+  }
+
+  22%,
+  47%,
+  72%,
+  97% {
+    opacity: 0.28;
+    transform: translateX(4px);
+  }
+}
+
+@keyframes mobileGhostBottom {
+  0%,
+  19%,
+  24%,
+  44%,
+  49%,
+  69%,
+  74%,
+  94%,
+  100% {
+    opacity: 0;
+    transform: translateX(0);
+  }
+
+  21%,
+  46%,
+  71%,
+  96% {
+    opacity: 0.55;
+    transform: translateX(5px);
+  }
+
+  23%,
+  48%,
+  73%,
+  98% {
+    opacity: 0.24;
+    transform: translateX(-3px);
+  }
+}
+
+@keyframes mobileScanPulse {
+  0%,
+  19%,
+  24%,
+  44%,
+  49%,
+  69%,
+  74%,
+  94%,
+  100% {
+    opacity: 0.08;
+    transform: translateX(0);
+  }
+
+  21%,
+  46%,
+  71%,
+  96% {
+    opacity: 0.22;
+    transform: translateX(3px);
+  }
+
+  23%,
+  48%,
+  73%,
+  98% {
+    opacity: 0.12;
+    transform: translateX(-2px);
+  }
+}
+
+@keyframes mobileEditionX {
+  0%,
+  19% {
+    opacity: 1;
+    transform: translateX(0) skewX(0) scaleX(1);
+  }
+
+  20% {
+    opacity: 0.5;
+    transform: translateX(-4px) skewX(5deg) scaleX(1.05);
+  }
+
+  21%,
+  99% {
+    opacity: 0;
+    transform: translateX(4px) skewX(-4deg) scaleX(0.96);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateX(0) skewX(0) scaleX(1);
+  }
+}
+
+@keyframes mobileEditionDas {
+  0%,
+  23%,
+  46%,
+  100% {
+    opacity: 0;
+    transform: translateX(4px) skewX(-4deg) scaleX(0.96);
+  }
+
+  24% {
+    opacity: 0.48;
+    transform: translateX(4px) skewX(-5deg) scaleX(1.05);
+  }
+
+  25%,
+  44% {
+    opacity: 1;
+    transform: translateX(0) skewX(0) scaleX(1);
+  }
+
+  45% {
+    opacity: 0.42;
+    transform: translateX(-4px) skewX(4deg) scaleX(1.04);
+  }
+}
+
+@keyframes mobileEditionTen {
+  0%,
+  48%,
+  71%,
+  100% {
+    opacity: 0;
+    transform: translateX(4px) skewX(-4deg) scaleX(0.96);
+  }
+
+  49% {
+    opacity: 0.48;
+    transform: translateX(4px) skewX(-5deg) scaleX(1.05);
+  }
+
+  50%,
+  69% {
+    opacity: 1;
+    transform: translateX(0) skewX(0) scaleX(1);
+  }
+
+  70% {
+    opacity: 0.42;
+    transform: translateX(-4px) skewX(4deg) scaleX(1.04);
+  }
+}
+
+@keyframes mobileEditionXZero {
+  0%,
+  73%,
+  96%,
+  100% {
+    opacity: 0;
+    transform: translateX(4px) skewX(-4deg) scaleX(0.96);
+  }
+
+  74% {
+    opacity: 0.48;
+    transform: translateX(4px) skewX(-5deg) scaleX(1.05);
+  }
+
+  75%,
+  94% {
+    opacity: 1;
+    transform: translateX(0) skewX(0) scaleX(1);
+  }
+
+  95% {
+    opacity: 0.42;
+    transform: translateX(-4px) skewX(4deg) scaleX(1.04);
+  }
+}
+
 @media (max-width: 1050px) {
   .navbar {
-    grid-template-columns: 1fr auto;
+    grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+    gap: 16px;
   }
 
   .navLinks {
@@ -1629,66 +1753,42 @@
   }
 }
 
-@media (max-width: 760px) {
+@media (max-width: 767px) {
   .hero {
     min-height: 100svh;
     overflow-y: auto;
+    background:
+      radial-gradient(circle at 74% 58%, rgba(153, 41, 234, 0.18), transparent 35%),
+      #000000;
   }
 
   .navbar {
-    height: 66px;
+    height: 56px;
     margin: 10px 12px 0;
-    padding-inline: 10px;
-    gap: 16px;
-  }
-
-  .navbar::before {
-    left: 42px;
-    width: 62px;
-  }
-
-  .navbar::after {
-    right: 20px;
-    width: 42px;
-    box-shadow: -48px 0 0 var(--purple);
-  }
-
-  .brand {
-    gap: 9px;
-  }
-
-  .brandGlyph {
-    width: 38px;
-    box-shadow: inset 3px 0 0 var(--lime);
-  }
-
-  .brandText {
-    font-size: 11px;
-  }
-
-  .navCta {
-    min-height: 42px;
-    padding-inline: 13px;
-    font-size: 8px;
-  }
-
-  .navCta .liveDot {
-    display: none;
+    padding-inline: 8px;
+    grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+    gap: 8px;
   }
 
   .heroGrid {
-    padding: 42px 22px 54px;
+    padding: 28px 16px 44px;
     grid-template-columns: 1fr;
-    gap: 56px;
+    gap: 34px;
+  }
+
+  .copy {
+    width: 100%;
+    margin-left: 0;
+    padding: clamp(22px, 6vw, 30px) 16px;
   }
 
   .kicker {
-    margin-bottom: 28px;
+    margin-bottom: 20px;
     font-size: 8px;
   }
 
   .title {
-    font-size: clamp(54px, 16vw, 82px);
+    font-size: clamp(46px, 15vw, 72px);
   }
 
   .title>span:nth-child(2) {
@@ -1697,7 +1797,7 @@
 
   .copyFooter {
     max-width: none;
-    margin-top: 36px;
+    margin-top: 24px;
   }
 
   .copyFooter p {
@@ -1705,15 +1805,172 @@
   }
 
   .visual {
-    min-height: 470px;
+    min-height: 310px;
+    align-items: center;
   }
 
   .monitorScene {
-    width: min(100%, 470px);
+    display: none;
   }
 
-  .monitor {
-    width: 88%;
+  .heroActions {
+    width: 100%;
+    order: 2;
+    margin-top: 34px;
+    margin-bottom: 0;
+    justify-content: center;
+  }
+
+  .mobileWordmark {
+    position: relative;
+    order: 1;
+    isolation: isolate;
+    width: 100%;
+    min-height: clamp(180px, 52vw, 250px);
+    display: grid;
+    place-items: center;
+    overflow: hidden;
+  }
+
+  .mobileWordmark::before {
+    content: "";
+    position: absolute;
+    z-index: -1;
+    width: min(86vw, 360px);
+    aspect-ratio: 1.6;
+    border-radius: 50%;
+    background: radial-gradient(ellipse, rgba(153, 41, 234, 0.3), rgba(255, 95, 207, 0.08) 44%, transparent 72%);
+    filter: blur(18px);
+    pointer-events: none;
+  }
+
+  .mobileWordmark::after {
+    content: "";
+    position: absolute;
+    inset: 18% 0;
+    z-index: 3;
+    pointer-events: none;
+    opacity: 0.08;
+    background: repeating-linear-gradient(to bottom, transparent 0 11px, rgba(255, 95, 207, 0.3) 12px, transparent 13px);
+    mix-blend-mode: screen;
+    animation: mobileScanPulse 10s ease-in-out infinite;
+  }
+
+  .mobileBrand {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    display: grid;
+    justify-items: center;
+    color: var(--cream);
+    font-family: var(--font-screen);
+    max-width: 100%;
+    font-size: clamp(36px, 11.5vw, 62px);
+    font-weight: 800;
+    letter-spacing: -0.055em;
+    line-height: 0.82;
+    text-align: center;
+    text-shadow:
+      -4px 0 rgba(153, 41, 234, 0.85),
+      4px 0 rgba(255, 95, 207, 0.5),
+      0 0 22px rgba(255, 95, 207, 0.34);
+  }
+
+  .mobileBrandName {
+    position: relative;
+    display: block;
+    max-width: 100%;
+    white-space: nowrap;
+    will-change: transform;
+    animation: mobileBrandGlitch 10s ease-in-out infinite;
+  }
+
+  .mobileBrandName::before,
+  .mobileBrandName::after {
+    content: attr(data-text);
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0;
+  }
+
+  .mobileBrandName::before {
+    color: var(--pink);
+    clip-path: inset(8% 0 57% 0);
+    text-shadow: -5px 0 var(--purple);
+    animation: mobileGhostTop 10s ease-in-out infinite;
+  }
+
+  .mobileBrandName::after {
+    color: var(--cream);
+    clip-path: inset(55% 0 9% 0);
+    text-shadow: 6px 0 var(--pink);
+    animation: mobileGhostBottom 10s ease-in-out infinite;
+  }
+
+  .mobileEditionCycle {
+    position: relative;
+    min-width: 3.2ch;
+    height: 0.92em;
+    margin-top: 0.18em;
+    display: grid;
+    justify-items: center;
+    color: var(--pink);
+    font-size: 1.18em;
+    line-height: 0.82;
+  }
+
+  .mobileEditionCycle > span {
+    grid-area: 1 / 1;
+    opacity: 0;
+    transform-origin: center;
+    will-change: transform, opacity;
+    text-shadow:
+      -5px 0 rgba(153, 41, 234, 0.85),
+      5px 0 rgba(250, 235, 146, 0.38),
+      0 0 18px rgba(255, 95, 207, 0.8);
+  }
+
+  .mobileEditionX {
+    opacity: 1;
+    animation: mobileEditionX 10s ease-in-out infinite;
+  }
+
+  .mobileEditionDas {
+    color: var(--pink);
+    font-family: "Nirmala UI", "Mangal", var(--font-body);
+    font-size: 0.84em;
+    font-weight: 900;
+    letter-spacing: 0.01em;
+    animation: mobileEditionDas 10s ease-in-out infinite;
+  }
+
+  .mobileEditionTen {
+    color: var(--cream);
+    animation: mobileEditionTen 10s ease-in-out infinite;
+  }
+
+  .mobileEditionXZero {
+    animation: mobileEditionXZero 10s ease-in-out infinite;
+  }
+
+  .prismBackdrop,
+  .cursorGlow,
+  .monitorOrbit,
+  .screenSweep,
+  .glitchBands,
+  .glitchNoise,
+  .signalLoss,
+  .crosshair,
+  .monitorShadow,
+  .codeFragment {
+    display: none;
+  }
+
+  .screen {
+    box-shadow:
+      inset 0 0 24px 6px #000000,
+      0 0 18px rgba(255, 95, 207, 0.18);
   }
 
   .dragHint {
@@ -1730,19 +1987,11 @@
     display: none;
   }
 
-  .prismBackdrop {
-    inset: -8%;
-    opacity: 0.22;
-  }
 }
 
 @media (max-width: 430px) {
-  .brandText {
-    display: none;
-  }
-
   .visual {
-    min-height: 400px;
+    min-height: 280px;
   }
 
   .screenContent strong {
@@ -1762,6 +2011,11 @@
 
 @media (prefers-reduced-motion: reduce) {
 
+  .navLinks a,
+  .navLinks a::after {
+    transition: none;
+  }
+
   .monitorFloat,
   .monitorOrbit,
   .monitorRig,
@@ -1773,7 +2027,6 @@
     transition: none;
   }
 
-  .liveDot,
   .monitor,
   .screen,
   .screen::before,
@@ -1787,6 +2040,14 @@
   .editionXo,
   .editionTen,
   .editionDas,
+  .mobileWordmark::after,
+  .mobileBrandName,
+  .mobileBrandName::before,
+  .mobileBrandName::after,
+  .mobileEditionX,
+  .mobileEditionDas,
+  .mobileEditionTen,
+  .mobileEditionXZero,
   .crosshair,
   .monitorShadow,
   .codeFragment {

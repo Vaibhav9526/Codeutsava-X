@@ -1,9 +1,14 @@
 "use client";
 
+import dynamic from "next/dynamic";
 import { useEffect, useRef, type CSSProperties } from "react";
-import PrismGrid from "@/components/originkit/ui/prism-grid";
 import { Navbar } from "@/components/navbar/Navbar";
+import { useRichEffects } from "@/hooks/useRichEffects";
 import styles from "./GlitchverseHero.module.css";
+
+const PrismGrid = dynamic(() => import("@/components/originkit/ui/prism-grid"), {
+  ssr: false,
+});
 
 type HeroStyle = CSSProperties & {
   "--pointer-x": string;
@@ -33,9 +38,10 @@ const initialHeroStyle: HeroStyle = {
 
 export function GlitchverseHero() {
   const heroRef = useRef<HTMLElement>(null);
+  const richEffects = useRichEffects();
 
   useEffect(() => {
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    if (!richEffects) return;
 
     const target = { x: 0, y: 0 };
     const current = { x: 0, y: 0 };
@@ -81,7 +87,7 @@ export function GlitchverseHero() {
       window.removeEventListener("pointermove", moveMonitor);
       if (animationFrame) cancelAnimationFrame(animationFrame);
     };
-  }, []);
+  }, [richEffects]);
 
   return (
     <main
@@ -90,22 +96,24 @@ export function GlitchverseHero() {
       ref={heroRef}
       style={initialHeroStyle}
     >
-      <div className={styles.prismBackdrop} aria-hidden="true">
-        <PrismGrid
-          backgroundColor="transparent"
-          boxSize={62}
-          borderWidth={1}
-          borderColor="rgba(153, 41, 234, 0.28)"
-          rotate={{ x: -10, y: 7 }}
-          colors={{
-            paletteCount: 4,
-            color1: "#000000",
-            color2: "#9929EA",
-            color3: "#FF5FCF",
-            color4: "#FAEB92",
-          }}
-        />
-      </div>
+      {richEffects && (
+        <div className={styles.prismBackdrop} aria-hidden="true">
+          <PrismGrid
+            backgroundColor="transparent"
+            boxSize={62}
+            borderWidth={1}
+            borderColor="rgba(153, 41, 234, 0.28)"
+            rotate={{ x: -10, y: 7 }}
+            colors={{
+              paletteCount: 4,
+              color1: "#000000",
+              color2: "#9929EA",
+              color3: "#FF5FCF",
+              color4: "#FAEB92",
+            }}
+          />
+        </div>
+      )}
       <div className={styles.noise} aria-hidden="true" />
       <div className={styles.cursorGlow} aria-hidden="true" />
 
@@ -133,8 +141,8 @@ export function GlitchverseHero() {
           </div>
         </div>
 
-        <div className={styles.visual} id="signal" aria-label="Interactive CRT transmission">
-          <div className="flex flex-wrap items-center justify-center gap-6 mb-10 z-10">
+        <div className={styles.visual} id="signal" aria-label="CodeUtsava identity transmission">
+          <div className={`${styles.heroActions} flex flex-wrap items-center justify-center gap-6 mb-10 z-10`}>
             <button className="gradient-button px-10 py-4 rounded font-mono font-bold text-sm tracking-widest text-white transition-transform hover:scale-105 active:scale-95">
               REGISTER
             </button>
@@ -152,6 +160,24 @@ export function GlitchverseHero() {
           <span className={`${styles.codeFragment} ${styles.fragmentThree}`} aria-hidden="true">
             &lt;/PERCEPTION&gt;
           </span>
+
+          <div
+            className={styles.mobileWordmark}
+            role="img"
+            aria-label="CodeUtsava X. The edition mark glitches between X, das in Hindi, 10, and X point 0."
+          >
+            <strong className={styles.mobileBrand} aria-hidden="true">
+              <span className={styles.mobileBrandName} data-text="CODEUTSAVA">
+                CODEUTSAVA
+              </span>
+              <span className={styles.mobileEditionCycle}>
+                <span className={styles.mobileEditionX}>X</span>
+                <span className={styles.mobileEditionDas} lang="hi">दस</span>
+                <span className={styles.mobileEditionTen}>10</span>
+                <span className={styles.mobileEditionXZero}>X.0</span>
+              </span>
+            </strong>
+          </div>
 
           <div className={styles.monitorScene}>
             <div className={styles.monitorOrbit} aria-hidden="true" />
