@@ -138,11 +138,19 @@ export function GlitchverseHero() {
               CodeUtsava X is the 10th edition of NIT Raipur&apos;s flagship
               technology celebration&mdash;uniting students and developers to build, learn, compete, and reimagine what technology can do.
             </p>
-
           </div>
         </div>
 
-        <div className={styles.visual} id="signal" aria-label="Interactive CRT transmission">
+        <div className={styles.visual} id="signal" aria-label="CodeUtsava identity transmission">
+          <div className={`${styles.heroActions} flex flex-wrap items-center justify-center gap-6 mb-10 z-10`}>
+            <button className="gradient-button px-10 py-4 rounded font-mono font-bold text-sm tracking-widest text-white transition-transform hover:scale-105 active:scale-95">
+              REGISTER
+            </button>
+            <button className="gradient-button-variant px-10 py-4 rounded font-mono font-bold text-sm tracking-widest text-white transition-transform hover:scale-105 active:scale-95">
+              COMING SOON
+            </button>
+          </div>
+
           <span className={`${styles.codeFragment} ${styles.fragmentOne}`} aria-hidden="true">
             EDITION//10
           </span>
@@ -152,6 +160,24 @@ export function GlitchverseHero() {
           <span className={`${styles.codeFragment} ${styles.fragmentThree}`} aria-hidden="true">
             &lt;/PERCEPTION&gt;
           </span>
+
+          <div
+            className={styles.mobileWordmark}
+            role="img"
+            aria-label="CodeUtsava X. The edition mark glitches between X, das in Hindi, 10, and X point 0."
+          >
+            <strong className={styles.mobileBrand} aria-hidden="true">
+              <span className={styles.mobileBrandName} data-text="CODEUTSAVA">
+                CODEUTSAVA
+              </span>
+              <span className={styles.mobileEditionCycle}>
+                <span className={styles.mobileEditionX}>X</span>
+                <span className={styles.mobileEditionDas} lang="hi">दस</span>
+                <span className={styles.mobileEditionTen}>10</span>
+                <span className={styles.mobileEditionXZero}>X.0</span>
+              </span>
+            </strong>
+          </div>
 
           <div className={styles.monitorScene}>
             <div className={styles.monitorOrbit} aria-hidden="true" />
