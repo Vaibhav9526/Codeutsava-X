@@ -85,7 +85,7 @@ const MobileNavLink = ({
       }
       setMobileOpen(false);
     }}
-    className="block w-full px-6 py-4 text-[12px] font-black tracking-[0.15em] text-[#faeb92] border-b border-[#faeb9220] hover:bg-[#faeb9220] uppercase text-center"
+    className="block w-full px-6 py-4 text-center text-[12px] font-black tracking-[0.15em] text-[#faeb92] decoration-[#ff5fcf] underline-offset-[6px] hover:text-[#ff5fcf] hover:underline focus-visible:text-[#ff5fcf] focus-visible:underline uppercase transition-colors duration-200"
     style={{
       fontFamily: "var(--font-body)",
     }}

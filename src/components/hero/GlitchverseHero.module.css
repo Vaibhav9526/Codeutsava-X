@@ -70,9 +70,26 @@
   z-index: 20;
   height: 60px;
   margin: 12px clamp(24px, 4vw, 72px) 0;
-  display: flex;
+  padding-inline: clamp(10px, 1.5vw, 18px);
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
   align-items: center;
-  justify-content: center;
+  gap: clamp(12px, 2vw, 28px);
+}
+
+.navbar > :first-child {
+  min-width: 0;
+  justify-self: start;
+}
+
+.navbar > :nth-child(2) {
+  min-width: 0;
+  justify-self: center;
+}
+
+.navbar > :last-child {
+  min-width: 0;
+  justify-self: end;
 }
 
 .navLinks {
@@ -93,12 +110,30 @@
   background: transparent;
   border: none;
   text-decoration: none;
+  transition: color 180ms ease;
+}
+
+.navLinks a::after {
+  content: "";
+  position: absolute;
+  right: 16px;
+  bottom: 2px;
+  left: 16px;
+  height: 2px;
+  background: var(--pink);
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform 180ms ease;
 }
 
 .navLinks a:hover,
 .navLinks a:focus-visible {
-  color: var(--bone);
-  text-shadow: 0 0 8px rgba(250, 235, 146, 0.5);
+  color: var(--pink);
+}
+
+.navLinks a:hover::after,
+.navLinks a:focus-visible::after {
+  transform: scaleX(1);
 }
 
 .navButton a {
@@ -108,12 +143,9 @@
   border-radius: 2px;
 }
 
-.navButton a:hover,
-.navButton a:focus-visible {
-  background: var(--bone);
-  color: var(--black);
-  border-color: var(--bone);
-  text-shadow: none;
+.navButton a::after {
+  right: 24px;
+  left: 24px;
 }
 
 .heroGrid {
@@ -1478,30 +1510,27 @@
   95%,
   100% {
     transform: translate(0) skewX(0);
-    filter: none;
   }
 
   21%,
   46%,
   71%,
   96% {
-    transform: translateX(-7px) skewX(5deg);
-    filter: contrast(1.7);
+    transform: translateX(-4px) skewX(2deg);
   }
 
   22%,
   47%,
   72%,
   97% {
-    transform: translateX(9px) skewX(-4deg);
-    filter: saturate(1.8);
+    transform: translateX(5px) skewX(-2deg);
   }
 
   23%,
   48%,
   73%,
   98% {
-    transform: translateX(-3px) skewX(2deg);
+    transform: translateX(-2px) skewX(1deg);
   }
 }
 
@@ -1523,16 +1552,16 @@
   45%,
   70%,
   95% {
-    opacity: 0.9;
-    transform: translateX(-9px);
+    opacity: 0.62;
+    transform: translateX(-5px);
   }
 
   22%,
   47%,
   72%,
   97% {
-    opacity: 0.42;
-    transform: translateX(7px);
+    opacity: 0.28;
+    transform: translateX(4px);
   }
 }
 
@@ -1554,16 +1583,47 @@
   46%,
   71%,
   96% {
-    opacity: 0.82;
-    transform: translateX(9px);
+    opacity: 0.55;
+    transform: translateX(5px);
   }
 
   23%,
   48%,
   73%,
   98% {
-    opacity: 0.34;
-    transform: translateX(-6px);
+    opacity: 0.24;
+    transform: translateX(-3px);
+  }
+}
+
+@keyframes mobileScanPulse {
+  0%,
+  19%,
+  24%,
+  44%,
+  49%,
+  69%,
+  74%,
+  94%,
+  100% {
+    opacity: 0.08;
+    transform: translateX(0);
+  }
+
+  21%,
+  46%,
+  71%,
+  96% {
+    opacity: 0.22;
+    transform: translateX(3px);
+  }
+
+  23%,
+  48%,
+  73%,
+  98% {
+    opacity: 0.12;
+    transform: translateX(-2px);
   }
 }
 
@@ -1576,13 +1636,13 @@
 
   20% {
     opacity: 0.5;
-    transform: translateX(-8px) skewX(11deg) scaleX(1.12);
+    transform: translateX(-4px) skewX(5deg) scaleX(1.05);
   }
 
   21%,
   99% {
     opacity: 0;
-    transform: translateX(8px) skewX(-8deg) scaleX(0.9);
+    transform: translateX(4px) skewX(-4deg) scaleX(0.96);
   }
 
   100% {
@@ -1597,12 +1657,12 @@
   46%,
   100% {
     opacity: 0;
-    transform: translateX(7px) skewX(-8deg) scaleX(0.88);
+    transform: translateX(4px) skewX(-4deg) scaleX(0.96);
   }
 
   24% {
     opacity: 0.48;
-    transform: translateX(8px) skewX(-10deg) scaleX(1.1);
+    transform: translateX(4px) skewX(-5deg) scaleX(1.05);
   }
 
   25%,
@@ -1613,7 +1673,7 @@
 
   45% {
     opacity: 0.42;
-    transform: translateX(-9px) skewX(9deg) scaleX(1.08);
+    transform: translateX(-4px) skewX(4deg) scaleX(1.04);
   }
 }
 
@@ -1623,12 +1683,12 @@
   71%,
   100% {
     opacity: 0;
-    transform: translateX(7px) skewX(-8deg) scaleX(0.88);
+    transform: translateX(4px) skewX(-4deg) scaleX(0.96);
   }
 
   49% {
     opacity: 0.48;
-    transform: translateX(8px) skewX(-10deg) scaleX(1.1);
+    transform: translateX(4px) skewX(-5deg) scaleX(1.05);
   }
 
   50%,
@@ -1639,7 +1699,7 @@
 
   70% {
     opacity: 0.42;
-    transform: translateX(-9px) skewX(9deg) scaleX(1.08);
+    transform: translateX(-4px) skewX(4deg) scaleX(1.04);
   }
 }
 
@@ -1649,12 +1709,12 @@
   96%,
   100% {
     opacity: 0;
-    transform: translateX(7px) skewX(-8deg) scaleX(0.88);
+    transform: translateX(4px) skewX(-4deg) scaleX(0.96);
   }
 
   74% {
     opacity: 0.48;
-    transform: translateX(8px) skewX(-10deg) scaleX(1.1);
+    transform: translateX(4px) skewX(-5deg) scaleX(1.05);
   }
 
   75%,
@@ -1665,11 +1725,20 @@
 
   95% {
     opacity: 0.42;
-    transform: translateX(-9px) skewX(9deg) scaleX(1.08);
+    transform: translateX(-4px) skewX(4deg) scaleX(1.04);
   }
 }
 
 @media (max-width: 1050px) {
+  .navbar {
+    grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+    gap: 16px;
+  }
+
+  .navLinks {
+    display: none;
+  }
+
   .heroGrid {
     grid-template-columns: minmax(0, 0.88fr) minmax(360px, 1.12fr);
     gap: 32px;
@@ -1684,7 +1753,7 @@
   }
 }
 
-@media (max-width: 760px) {
+@media (max-width: 767px) {
   .hero {
     min-height: 100svh;
     overflow-y: auto;
@@ -1696,29 +1765,21 @@
   .navbar {
     height: 56px;
     margin: 10px 12px 0;
-  }
-
-  .navLinks {
-    width: 100%;
-    padding-inline: 12px;
-    justify-content: flex-start;
-    gap: 12px;
-    overflow-x: auto;
-    font-size: 9px;
-    letter-spacing: 0.08em;
-    scrollbar-width: none;
-    touch-action: pan-x;
-    white-space: nowrap;
-  }
-
-  .navLinks::-webkit-scrollbar {
-    display: none;
+    padding-inline: 8px;
+    grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+    gap: 8px;
   }
 
   .heroGrid {
-    padding: 28px 12px 44px;
+    padding: 28px 16px 44px;
     grid-template-columns: 1fr;
     gap: 34px;
+  }
+
+  .copy {
+    width: 100%;
+    margin-left: 0;
+    padding: clamp(22px, 6vw, 30px) 16px;
   }
 
   .kicker {
@@ -1753,9 +1814,11 @@
   }
 
   .heroActions {
+    width: 100%;
     order: 2;
     margin-top: 34px;
     margin-bottom: 0;
+    justify-content: center;
   }
 
   .mobileWordmark {
@@ -1787,10 +1850,10 @@
     inset: 18% 0;
     z-index: 3;
     pointer-events: none;
-    opacity: 0.22;
+    opacity: 0.08;
     background: repeating-linear-gradient(to bottom, transparent 0 11px, rgba(255, 95, 207, 0.3) 12px, transparent 13px);
     mix-blend-mode: screen;
-    animation: mobileGhostBottom 8s steps(1, end) infinite;
+    animation: mobileScanPulse 10s ease-in-out infinite;
   }
 
   .mobileBrand {
@@ -1801,7 +1864,8 @@
     justify-items: center;
     color: var(--cream);
     font-family: var(--font-screen);
-    font-size: clamp(42px, 13vw, 70px);
+    max-width: 100%;
+    font-size: clamp(36px, 11.5vw, 62px);
     font-weight: 800;
     letter-spacing: -0.055em;
     line-height: 0.82;
@@ -1815,7 +1879,10 @@
   .mobileBrandName {
     position: relative;
     display: block;
-    animation: mobileBrandGlitch 8s steps(1, end) infinite;
+    max-width: 100%;
+    white-space: nowrap;
+    will-change: transform;
+    animation: mobileBrandGlitch 10s ease-in-out infinite;
   }
 
   .mobileBrandName::before,
@@ -1831,14 +1898,14 @@
     color: var(--pink);
     clip-path: inset(8% 0 57% 0);
     text-shadow: -5px 0 var(--purple);
-    animation: mobileGhostTop 8s steps(1, end) infinite;
+    animation: mobileGhostTop 10s ease-in-out infinite;
   }
 
   .mobileBrandName::after {
     color: var(--cream);
     clip-path: inset(55% 0 9% 0);
     text-shadow: 6px 0 var(--pink);
-    animation: mobileGhostBottom 8s steps(1, end) infinite;
+    animation: mobileGhostBottom 10s ease-in-out infinite;
   }
 
   .mobileEditionCycle {
@@ -1857,6 +1924,7 @@
     grid-area: 1 / 1;
     opacity: 0;
     transform-origin: center;
+    will-change: transform, opacity;
     text-shadow:
       -5px 0 rgba(153, 41, 234, 0.85),
       5px 0 rgba(250, 235, 146, 0.38),
@@ -1865,7 +1933,7 @@
 
   .mobileEditionX {
     opacity: 1;
-    animation: mobileEditionX 8s steps(1, end) infinite;
+    animation: mobileEditionX 10s ease-in-out infinite;
   }
 
   .mobileEditionDas {
@@ -1874,16 +1942,16 @@
     font-size: 0.84em;
     font-weight: 900;
     letter-spacing: 0.01em;
-    animation: mobileEditionDas 8s steps(1, end) infinite;
+    animation: mobileEditionDas 10s ease-in-out infinite;
   }
 
   .mobileEditionTen {
     color: var(--cream);
-    animation: mobileEditionTen 8s steps(1, end) infinite;
+    animation: mobileEditionTen 10s ease-in-out infinite;
   }
 
   .mobileEditionXZero {
-    animation: mobileEditionXZero 8s steps(1, end) infinite;
+    animation: mobileEditionXZero 10s ease-in-out infinite;
   }
 
   .prismBackdrop,
@@ -1942,6 +2010,11 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
+
+  .navLinks a,
+  .navLinks a::after {
+    transition: none;
+  }
 
   .monitorFloat,
   .monitorOrbit,

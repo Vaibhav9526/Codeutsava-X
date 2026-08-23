@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 
 const RICH_EFFECTS_QUERY =
-  '(min-width: 761px) and (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference)';
+  '(min-width: 768px) and (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference)';
 
 export function useRichEffects() {
   const [enabled, setEnabled] = useState(false);
