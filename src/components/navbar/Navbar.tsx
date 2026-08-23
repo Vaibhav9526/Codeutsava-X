@@ -1,12 +1,9 @@
 "use client";
 
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { Menu, X } from "lucide-react";
-import { motion, AnimatePresence } from "framer-motion";
-import { gsap } from "gsap";
-import { EasePack } from "gsap/EasePack";
 import styles from "../hero/GlitchverseHero.module.css";
 
 function smoothScrollTo(targetSelector: string) {
@@ -132,87 +129,15 @@ const NavItem: React.FC<NavItemProps> = ({
     }
   };
 
-  const slices = 5;
-  const sliceHeight = 100 / slices;
-
   return (
-    <motion.a
+    <a
       href={href}
       target={target}
       rel={target === "_blank" ? "noopener noreferrer" : undefined}
-      ref={containerRef}
       onClick={handleClick}
-      onMouseEnter={handleMouseEnter}
-      onMouseLeave={handleMouseLeave}
-      initial={{
-        opacity: 0,
-        y: -10,
-        filter: "blur(2px)",
-      }}
-      animate={{
-        opacity: 1,
-        y: 0,
-        filter: "blur(0px)",
-      }}
-      transition={{
-        duration: 0.8,
-        delay,
-        ease: [0.22, 1, 0.36, 1],
-      }}
-      whileHover={{
-        scale: 1.05,
-        transition: {
-          duration: 0.2,
-          ease: "easeOut",
-        },
-      }}
-      style={{
-        display: "flex",
-        alignItems: "center",
-        position: "relative",
-        overflow: "hidden"
-      }}
     >
-      <svg
-        style={{
-          position: "absolute",
-          inset: 0,
-          width: "100%",
-          height: "100%",
-          pointerEvents: "none",
-          zIndex: 0,
-        }}
-        preserveAspectRatio="none"
-      >
-        <g className="purple">
-          {Array.from({ length: slices }).map((_, i) => (
-            <rect
-              key={`purple-${i}`}
-              className="purple-rect"
-              x="0"
-              y={`${i * sliceHeight}%`}
-              width="100%"
-              height={`${sliceHeight + 1}%`}
-              fill="#9929ea"
-            />
-          ))}
-        </g>
-        <g className="pink">
-          {Array.from({ length: slices }).map((_, i) => (
-            <rect
-              key={`pink-${i}`}
-              className="pink-rect"
-              x="0"
-              y={`${i * sliceHeight}%`}
-              width="100%"
-              height={`${sliceHeight + 1}%`}
-              fill="#ff5fcf"
-            />
-          ))}
-        </g>
-      </svg>
-      <span style={{ position: "relative", zIndex: 10 }}>{children}</span>
-    </motion.a>
+      {children}
+    </a>
   );
 };
 
@@ -300,7 +225,7 @@ export function Navbar({ variant = 'default' }: { variant?: 'default' | 'back-to
         <div className="flex items-center gap-4">
           {!isLargeScreen ? (
             <button
-              className="text-[#faeb92] p-2 hover:bg-[#faeb9220] rounded-md transition-colors cursor-pointer"
+              className="text-[#faeb92] p-2 hover:bg-[#faeb9220] rounded-md cursor-pointer"
               onClick={() => setMobileOpen(!mobileOpen)}
               aria-label={mobileOpen ? "Close menu" : "Open menu"}
             >
@@ -333,7 +258,7 @@ export function Navbar({ variant = 'default' }: { variant?: 'default' | 'back-to
                 />
               </a>
               <div className={`${styles.navLinks} ${styles.navButton}`}>
-                <NavItem href="https://docs.google.com/forms/d/e/1FAIpQLSfHv8OJ7jkp9thPyPx1HrWJNPoGZ2z7FaFtIqpz7lO3dIqqgg/viewform?pli=1" target="_blank" delay={0.1}>
+                <NavItem href="https://docs.google.com/forms/d/e/1FAIpQLSfHv8OJ7jkp9thPyPx1HrWJNPoGZ2z7FaFtIqpz7lO3dIqqgg/viewform?pli=1" target="_blank">
                   FEEDBACK
                 </NavItem>
               </div>
@@ -411,7 +336,7 @@ export function Navbar({ variant = 'default' }: { variant?: 'default' | 'back-to
           {isLargeScreen ? (
             <>
               <div className={`${styles.navLinks} ${styles.navButton}`}>
-                <NavItem href="/Brochure.pdf" target="_blank" delay={0.7}>
+                <NavItem href="/Brochure.pdf" target="_blank">
                   BROCHURE
                 </NavItem>
               </div>
@@ -517,19 +442,18 @@ export function Navbar({ variant = 'default' }: { variant?: 'default' | 'back-to
                 href="https://discord.gg/Ek9gr2Xnqb"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center justify-center gap-3 w-full px-6 py-5 text-[12px] font-black tracking-[0.12em] text-[#000] bg-[#faeb92] hover:bg-[#ff5fcf] transition-colors uppercase text-center"
+                className="flex items-center justify-center gap-3 w-full px-6 py-5 text-[12px] font-black tracking-[0.12em] text-[#000] bg-[#faeb92] hover:bg-[#ff5fcf] uppercase text-center"
                 style={{
                   fontFamily: "var(--font-body)",
                 }}
               >
-                <span className="w-2 h-2 rounded-full bg-black animate-pulse" />
+                <span className="w-2 h-2 rounded-full bg-black" />
 
                 JOIN THE COMMUNITY
               </a>
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+          </div>
+        </div>
+      )}
     </>
   );
 }

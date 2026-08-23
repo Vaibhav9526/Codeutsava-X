@@ -1,28 +1,18 @@
 import Image from 'next/image';
-import Tetris from '@/components/originkit/ui/pixel-tetris';
 import { SOCIAL_LINKS } from '@/data/socialLinks';
+import { AmbientTetris } from './AmbientTetris';
 import styles from '../sections/EventSections.module.css';
 
 export function SiteFooter() {
   return (
     <footer className={styles.footer} id='contact'>
-      <div className={styles.tetrisField} aria-hidden='true'>
-        <Tetris
-          boardColor='rgba(250, 235, 146, 0.045)'
-          colors={['#9929ea', '#ff5fcf', '#faeb92']}
-          movement={4}
-          cellSize={30}
-          gap={2}
-          rounded={2}
-          dropSpeed={2}
-        />
-      </div>
+      <AmbientTetris />
       <div className={styles.footerShade} aria-hidden='true' />
 
       <div className={styles.footerTop}>
         <div className={styles.brandLogos}>
           <a href='#top' aria-label='Codeutsava home'>
-            <Image src='/images/codeutsava/codeutsava-logo.png' alt='CodeUtsava Logo' width={1080} height={1080} priority />
+            <Image src='/images/codeutsava/codeutsava-logo.png' alt='CodeUtsava Logo' width={1080} height={1080} />
           </a>
           <span aria-hidden='true' />
           <a href='https://codeutsava.nitrr.ac.in/team' aria-label='Turing Club of Programmers'>
