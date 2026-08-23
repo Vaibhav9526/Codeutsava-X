@@ -3,6 +3,8 @@ import { ExperienceShell } from '@/components/intro/ExperienceShell';
 import { GlitchverseHero } from '@/components/hero/GlitchverseHero';
 import { SponsorSection } from "@/components/sponsor-section/SponsorSection";
 import { TimelineRoad } from '@/components/timeline/TimelineRoad';
+import { GuidelinesSection } from '@/components/sections/guidelines-section';
+import { PrizesSection } from '@/components/sections/prizes-section';
 import { EventSections } from '@/components/sections/EventSections';
 import { BackgroundVideo } from '@/components/layout/BackgroundVideo';
 
@@ -20,6 +22,8 @@ export default function Home() {
           <GlitchverseHero />
         <SponsorSection />
         <TimelineRoad />
+        <GuidelinesSection />
+        <PrizesSection />
         <EventSections />
       </div>
     </ExperienceShell>
