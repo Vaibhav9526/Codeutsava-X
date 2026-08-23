@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 
+
 export const metadata: Metadata = {
   title: {
     default: "Codeutsava X.0",
@@ -21,7 +22,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body>{children}</body>
+      <body>
+        <div className="relative z-10">{children}</div>
+      </body>
     </html>
   );
 }

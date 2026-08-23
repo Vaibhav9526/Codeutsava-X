@@ -8,7 +8,7 @@ export function FaqSection() {
     return (
         <SectionShell
             id="faq"
-            className="bg-[radial-gradient(circle_at_90%_75%,rgba(54,241,205,0.08),transparent_28%)]"
+            className="bg-[radial-gradient(circle_at_90%_75%,rgba(54,241,205,0.02),transparent_28%)]"
         >
             <div className="grid gap-12 lg:grid-cols-[minmax(18rem,0.7fr)_minmax(0,1.3fr)] lg:gap-20">
                 <div>
@@ -17,6 +17,7 @@ export function FaqSection() {
                         eyebrow="Decoded"
                         title="Questions, without the static."
                         description="Known details will be updated here as the event takes shape. Every pending answer is labeled plainly."
+                        titleClassName="!text-2xl sm:!text-3xl lg:!text-4xl"
                     />
                     <Link
                         href="/faq"

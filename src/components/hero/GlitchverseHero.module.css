@@ -14,7 +14,7 @@
   background:
     radial-gradient(circle at 73% 42%, rgba(153, 41, 234, 0.25), transparent 28%),
     radial-gradient(circle at 43% 72%, rgba(255, 95, 207, 0.08), transparent 30%),
-    #000000;
+    transparent;
   color: var(--bone);
 }
 
@@ -68,7 +68,7 @@
 .navbar {
   position: relative;
   z-index: 20;
-  height: 64px;
+  height: 60px;
   margin: 12px clamp(24px, 4vw, 72px) 0;
   display: flex;
   align-items: center;
@@ -78,27 +78,88 @@
 .navLinks {
   display: flex;
   align-items: center;
-  gap: clamp(20px, 3vw, 44px);
+  justify-content: center;
+  gap: 32px;
   font-family: var(--font-body);
-  font-size: 10px;
+  font-size: 13px;
   font-weight: 900;
   letter-spacing: 0.13em;
 }
 
 .navLinks a {
   position: relative;
-  padding: 10px 2px;
-  color: rgba(250, 235, 146, 0.72);
+  padding: 8px 16px;
+  color: rgba(250, 235, 146, 0.85);
+  background: transparent;
+  border: none;
   text-decoration: none;
   transition: color 160ms ease;
 }
 
 .navLinks a:hover,
 .navLinks a:focus-visible {
-  color: var(--lime);
-  text-decoration: underline;
-  text-decoration-thickness: 1px;
-  text-underline-offset: 6px;
+  color: var(--bone);
+  text-shadow: 0 0 8px rgba(250, 235, 146, 0.5);
+}
+
+.navButton a {
+  padding: 12px 24px;
+  background: rgba(0, 0, 0, 0.6);
+  border: 1px solid rgba(250, 235, 146, 0.25);
+  border-radius: 2px;
+  transition:
+    background-color 160ms ease,
+    color 160ms ease,
+    border-color 160ms ease;
+}
+
+.navButton a:hover,
+.navButton a:focus-visible {
+  background: var(--bone);
+  color: var(--black);
+  border-color: var(--bone);
+  text-shadow: none;
+}
+
+.navCta {
+  justify-self: end;
+  min-height: 48px;
+  padding: 0 20px;
+  border: 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: var(--lime);
+  color: var(--black);
+  clip-path: polygon(0 0, calc(100% - 11px) 0, 100% 11px, 100% 100%, 11px 100%, 0 calc(100% - 11px));
+  font-family: var(--font-body);
+  font-size: 9px;
+  font-weight: 900;
+  letter-spacing: 0.12em;
+  text-decoration: none;
+  transition:
+    background-color 160ms ease,
+    transform 160ms ease;
+}
+
+.navCta:hover,
+.navCta:focus-visible {
+  background: var(--bone);
+  color: var(--black);
+  transform: translateY(-2px);
+}
+
+.liveDot {
+  width: 7px;
+  height: 7px;
+  border: 2px solid var(--black);
+  background: transparent;
+  animation: pulse 1.8s ease-in-out infinite;
+}
+
+.navCta:hover .liveDot,
+.navCta:focus-visible .liveDot {
+  background: var(--black);
 }
 
 .heroGrid {
@@ -107,7 +168,7 @@
   margin: 0 auto;
   padding: clamp(42px, 6.5vh, 84px) clamp(24px, 6vw, 96px) clamp(34px, 5vh, 64px);
   display: grid;
-  grid-template-columns: minmax(0, 0.92fr) minmax(440px, 1.08fr);
+  grid-template-columns: minmax(0, 1.55fr) minmax(440px, 0.85fr);
   align-items: center;
   gap: clamp(52px, 7vw, 112px);
 }
@@ -116,10 +177,16 @@
   position: relative;
   z-index: 4;
   min-width: 0;
-  max-width: 680px;
+  width: 100%;
+  margin-left: clamp(12px, 6vw, 80px);
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
+  align-items: center;
+  background: rgba(0, 0, 0, 0.55);
+  padding: clamp(24px, 4vw, 48px);
+  border-radius: 16px;
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
 }
 
 .kicker {
@@ -127,10 +194,11 @@
   margin-bottom: clamp(24px, 4vh, 48px);
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 13px;
   color: var(--lime);
   font-family: var(--font-mono);
-  font-size: 9px;
+  font-size: 11px;
   font-weight: 600;
   letter-spacing: 0.2em;
   text-transform: uppercase;
@@ -145,20 +213,21 @@
 .kicker>span:last-child {
   color: var(--cream);
   font-family: var(--font-brand);
-  font-size: 11px;
+  font-size: 13px;
   letter-spacing: 0.11em;
   line-height: 1;
 }
 
 .title {
   width: 100%;
-  max-width: 680px;
+  max-width: 100%;
   margin: 0;
   display: grid;
-  justify-items: start;
-  text-align: left;
+  gap: clamp(10px, 2vh, 24px);
+  justify-items: center;
+  text-align: center;
   font-family: var(--font-body);
-  font-size: clamp(62px, 7.3vw, 122px);
+  font-size: clamp(58px, 7.5vw, 128px);
   font-weight: 800;
   letter-spacing: -0.045em;
   line-height: 0.82;
@@ -167,42 +236,49 @@
 
 .title>span {
   display: block;
-  width: max-content;
-  max-width: 100%;
+  width: 100%;
+  white-space: normal;
+  word-break: break-word;
   margin: 0;
 }
 
+.title>span:nth-child(1) {
+  font-size: 0.55em;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+
 .title>span:nth-child(2) {
-  color: transparent;
-  -webkit-text-stroke: 1px rgba(250, 235, 146, 0.72);
-  font-size: 0.67em;
+  color: var(--lime);
+  text-shadow: 7px 0 rgba(153, 41, 234, 0.38), -3px 0 rgba(250, 235, 146, 0.13);
+  font-size: 0.85em;
   font-weight: 700;
   letter-spacing: -0.025em;
   line-height: 1.05;
 }
 
 .title .screenWord {
-  color: var(--lime);
+  color: transparent;
+  -webkit-text-stroke: 1px rgba(250, 235, 146, 0.72);
   font-family: inherit;
-  font-size: 0.5em;
+  font-size: 0.55em;
   font-weight: inherit;
   letter-spacing: inherit;
   line-height: inherit;
-  text-shadow: 7px 0 rgba(153, 41, 234, 0.38), -3px 0 rgba(250, 235, 146, 0.13);
 }
 
 .copyFooter {
   width: 100%;
-  max-width: 430px;
+  max-width: none;
   margin-top: clamp(34px, 5vh, 58px);
 }
 
 .copyFooter p {
   margin: 0;
   color: rgba(250, 235, 146, 0.7);
-  font-size: clamp(13px, 1.1vw, 16px);
+  font-size: clamp(16px, 1.3vw, 20px);
   line-height: 1.6;
-  text-align: left;
+  text-align: center;
 }
 
 .visual {
@@ -210,14 +286,16 @@
   z-index: 5;
   min-width: 0;
   min-height: min(62vh, 690px);
-  display: grid;
-  place-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-end;
 }
 
 .monitorScene {
   position: relative;
   z-index: 2;
-  width: min(100%, 570px);
+  width: min(100%, 510px);
   perspective: 1200px;
   transform-style: preserve-3d;
 }

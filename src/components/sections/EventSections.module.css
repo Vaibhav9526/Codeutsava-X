@@ -5,7 +5,7 @@
   --black: #000000;
   position: relative;
   overflow: hidden;
-  background: var(--black);
+  background: transparent;
   color: var(--cream);
 }
 
@@ -17,7 +17,7 @@
     linear-gradient(rgba(250, 235, 146, 0.025) 1px, transparent 1px),
     linear-gradient(90deg, rgba(250, 235, 146, 0.025) 1px, transparent 1px),
     radial-gradient(circle at 82% 22%, rgba(153, 41, 234, 0.2), transparent 28%),
-    #000000;
+    transparent;
   background-size: 36px 36px, 36px 36px, auto, auto;
 }
 
@@ -285,7 +285,7 @@
   overflow: hidden;
   padding: clamp(54px, 7vw, 100px) clamp(24px, 6vw, 96px) 26px;
   border-top: 1px solid rgba(255, 95, 207, 0.5);
-  background: #000000;
+  background: transparent;
 }
 
 .tetrisField,
@@ -305,8 +305,8 @@
 .footerShade {
   z-index: -1;
   background:
-    linear-gradient(90deg, #000000 0 38%, rgba(0, 0, 0, 0.7) 60%, rgba(0, 0, 0, 0.16)),
-    linear-gradient(to bottom, #000000 0, transparent 35%, rgba(0, 0, 0, 0.5) 76%, #000000 100%);
+    linear-gradient(90deg, rgba(0, 0, 0, 0.8) 0 38%, rgba(0, 0, 0, 0.7) 60%, rgba(0, 0, 0, 0.16)),
+    linear-gradient(to bottom, rgba(0, 0, 0, 0.8) 0, transparent 35%, rgba(0, 0, 0, 0.5) 76%, rgba(0, 0, 0, 0.8) 100%);
 }
 
 .footerTop,

@@ -4,6 +4,7 @@ type SectionHeadingProps = {
     title: string;
     description?: string;
     align?: "start" | "center";
+    titleClassName?: string;
 };
 
 export function SectionHeading({
@@ -12,6 +13,7 @@ export function SectionHeading({
     title,
     description,
     align = "start",
+    titleClassName = "",
 }: SectionHeadingProps) {
     const alignment =
         align === "center"
@@ -27,7 +29,7 @@ export function SectionHeading({
             </p>
             <h2
                 id={id}
-                className="mt-5 text-3xl leading-none font-black tracking-[-0.04em] text-balance text-white uppercase sm:text-5xl lg:text-6xl"
+                className={`mt-5 text-3xl leading-none font-black tracking-[-0.04em] text-balance text-white uppercase sm:text-5xl lg:text-6xl ${titleClassName}`}
             >
                 {title}
             </h2>

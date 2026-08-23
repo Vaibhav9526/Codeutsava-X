@@ -112,7 +112,7 @@ export const TimelineCanvas3D: React.FC<TimelineCanvas3DProps> = ({
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
-    const ctx = canvas.getContext('2d', { alpha: false });
+    const ctx = canvas.getContext('2d', { alpha: true });
     if (!ctx) return;
 
     let animationFrameId: number;
@@ -237,10 +237,11 @@ export const TimelineCanvas3D: React.FC<TimelineCanvas3DProps> = ({
         width / 2, height * HORIZON_Y, 20,
         width / 2, height * HORIZON_Y, Math.max(width, height) * 0.80
       );
-      bgGrad.addColorStop(0, '#07020C');     // Barely-there subtle deep purple center
-      bgGrad.addColorStop(0.40, '#040107');  // Deep retro void
-      bgGrad.addColorStop(1, '#020104');     // Obsidian black
+      bgGrad.addColorStop(0, 'rgba(7, 2, 12, 0.4)');     // Barely-there subtle deep purple center
+      bgGrad.addColorStop(0.40, 'rgba(4, 1, 7, 0.5)');  // Deep retro void
+      bgGrad.addColorStop(1, 'rgba(2, 1, 4, 0.6)');     // Obsidian black
       ctx.fillStyle = bgGrad;
+      ctx.clearRect(0, 0, width, height);
       ctx.fillRect(0, 0, width, height);
 
       // 2. Draw Ambient 3D Particle Cloud
