@@ -4,6 +4,7 @@ import { GlitchverseHero } from '@/components/hero/GlitchverseHero';
 import { SponsorSection } from "@/components/sponsor-section/SponsorSection";
 import { TimelineRoad } from '@/components/timeline/TimelineRoad';
 import { EventSections } from '@/components/sections/EventSections';
+import { AboutSection } from '@/components/sections/about-section';
 import { BackgroundVideo } from '@/components/layout/BackgroundVideo';
 
 export const metadata: Metadata = {
@@ -13,17 +14,17 @@ export const metadata: Metadata = {
 
 export default function Home() {
   return (
-      <>
-    <BackgroundVideo />
+    <>
+      <BackgroundVideo />
       <ExperienceShell>
         <div className='flex min-h-screen flex-col bg-transparent'>
           <GlitchverseHero />
-        <SponsorSection />
-        <TimelineRoad />
-        <EventSections />
-      </div>
-    </ExperienceShell>
-      </>
-
+          <AboutSection />
+          <SponsorSection />
+          <TimelineRoad />
+          <EventSections />
+        </div>
+      </ExperienceShell>
+    </>
   );
 }
