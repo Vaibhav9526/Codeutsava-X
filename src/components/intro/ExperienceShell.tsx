@@ -8,9 +8,17 @@ import styles from "./ExperienceShell.module.css";
 const GLYPHS = [..."CODEUTSAVA", " ", ..."X", ".O"];
 
 export function ExperienceShell({ children }: { children: ReactNode }) {
-  const [ready, setReady] = useState(false);
+  const [entered, setEntered] = useState<boolean>(() => {
+    if (typeof window !== "undefined") {
+      return (
+        sessionStorage.getItem("glitchverse_entered") === "true" ||
+        new URLSearchParams(window.location.search).get("skipIntro") === "true"
+      );
+    }
+    return false;
+  });
+  const [ready, setReady] = useState(() => entered);
   const [entering, setEntering] = useState(false);
-  const [entered, setEntered] = useState(false);
   const compactModeRef = useRef(false);
 
   useEffect(() => {
