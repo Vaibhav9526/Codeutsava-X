@@ -1,9 +1,8 @@
 'use client';
 
 import dynamic from 'next/dynamic';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { FAQS } from '@/data/faqs';
-import { useRichEffects } from '@/hooks/useRichEffects';
 import styles from '../sections/EventSections.module.css';
 
 const AsciiFire = dynamic(() => import('@/components/originkit/ui/ascii-flame'), {
@@ -12,7 +11,11 @@ const AsciiFire = dynamic(() => import('@/components/originkit/ui/ascii-flame'),
 
 export function FaqSection() {
   const [openFaq, setOpenFaq] = useState<number | null>(0);
-  const richEffects = useRichEffects();
+  const [isMounted, setIsMounted] = useState(false);
+
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
 
   return (
     <section className={styles.faq} id='faq' aria-labelledby='faq-title'>
@@ -22,7 +25,7 @@ export function FaqSection() {
       </div>
 
       <div className={styles.faqPanel}>
-        {richEffects && (
+        {isMounted && (
           <div className={styles.faqFlame} aria-hidden='true'>
             <AsciiFire
               intensity={96}

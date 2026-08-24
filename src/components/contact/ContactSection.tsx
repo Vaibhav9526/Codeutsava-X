@@ -1,8 +1,13 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import dynamic from 'next/dynamic';
 import { Send, MapPin, ExternalLink, CheckCircle } from 'lucide-react';
 import styles from './ContactSection.module.css';
+
+const AsciiFire = dynamic(() => import('@/components/originkit/ui/ascii-flame'), {
+  ssr: false,
+});
 
 export function ContactSection() {
   const [formData, setFormData] = useState({
@@ -13,6 +18,11 @@ export function ContactSection() {
   });
 
   const [status, setStatus] = useState<'idle' | 'submitting' | 'success'>('idle');
+  const [isMounted, setIsMounted] = useState(false);
+
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setFormData(prev => ({
@@ -49,6 +59,26 @@ export function ContactSection() {
 
       {/* Main Glitchverse Contact Panel */}
       <div className={styles.contactPanel}>
+        {/* ASCII Fire Background Effect - rendered on all devices including Android */}
+        {isMounted && (
+          <div className={styles.flameBackdrop} aria-hidden="true">
+            <AsciiFire
+              intensity={96}
+              windDirection="right"
+              windForce={16}
+              decay={9}
+              turbulence={32}
+              thickness={3}
+              palette="custom"
+              shades={['#13021a', '#3a0b52', '#7218aa', '#9929ea', '#ff5fcf', '#faeb92']}
+              sparkColor="#faeb92"
+              charset="dense"
+              backgroundColor="transparent"
+              style={{ width: '100%', height: '100%' }}
+            />
+          </div>
+        )}
+
         {/* CRT Scanline & Radial Scrim Backdrop */}
         <div className={styles.panelScrim} aria-hidden="true" />
 

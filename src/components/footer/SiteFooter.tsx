@@ -1,71 +1,242 @@
+'use client';
+
+import React, { useState } from 'react';
 import Image from 'next/image';
-import { SOCIAL_LINKS } from '@/data/socialLinks';
+import { MapPin, Volume2, VolumeX } from 'lucide-react';
+import { retroAudio } from '@/utils/audioEffects';
 import { AmbientTetris } from './AmbientTetris';
-import styles from '../sections/EventSections.module.css';
+import styles from './SiteFooter.module.css';
+
+const SOCIAL_APP_ICONS = [
+  {
+    name: 'Facebook',
+    href: 'https://www.facebook.com/codeutsava/',
+    svg: (
+      <svg className="w-5 h-5 fill-current" viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
+      </svg>
+    ),
+  },
+  {
+    name: 'Instagram',
+    href: 'https://www.instagram.com/codeutsavanitrr/',
+    svg: (
+      <svg className="w-5 h-5 fill-current" viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" />
+      </svg>
+    ),
+  },
+  {
+    name: 'GitHub',
+    href: 'https://github.com/TCP-Tech',
+    svg: (
+      <svg className="w-5 h-5 fill-current" viewBox="0 0 24 24" aria-hidden="true">
+        <path fillRule="evenodd" clipRule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" />
+      </svg>
+    ),
+  },
+  {
+    name: 'Twitter',
+    href: 'https://twitter.com/codeutsavanitrr?lang=en',
+    svg: (
+      <svg className="w-5 h-5 fill-current" viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+      </svg>
+    ),
+  },
+  {
+    name: 'LinkedIn',
+    href: 'https://www.linkedin.com/company/codeutsava/',
+    svg: (
+      <svg className="w-5 h-5 fill-current" viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.28 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.75M6.46 10.9v8.37H9.2V10.9H6.46M7.83 6.75a1.62 1.62 0 1 0 0 3.24 1.62 1.62 0 0 0 0-3.24z" />
+      </svg>
+    ),
+  },
+];
+
+const NAV_LINKS = [
+  { label: 'HOME', href: '#top' },
+  { label: 'EVENTS', href: '/events' },
+  { label: 'SPEAKERS', href: 'https://codeutsava.nitrr.ac.in/speakers' },
+  { label: 'FAQ', href: '#faq' },
+  { label: 'CONTACT US', href: '/contact-us' },
+];
 
 export function SiteFooter() {
+  const [isMuted, setIsMuted] = useState<boolean>(retroAudio.getMuted());
+
+  const toggleMute = () => {
+    const nextMuted = retroAudio.toggleMute();
+    setIsMuted(nextMuted);
+    if (!nextMuted) retroAudio.playXPDing();
+  };
+
+  const handleBackToTop = (e: React.MouseEvent) => {
+    e.preventDefault();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
   return (
-    <footer className={styles.footer} id='contact'>
+    <footer className={styles.footer} id="contact" aria-label="Site Footer">
+      {/* Glitchverse Ambient Backplanes */}
       <AmbientTetris />
-      <div className={styles.footerShade} aria-hidden='true' />
+      <div className={styles.footerShade} aria-hidden="true" />
 
-      <div className={styles.footerTop}>
-        <div className={styles.brandLogos}>
-          <a href='#top' aria-label='Codeutsava home'>
-            <Image src='/images/codeutsava/codeutsava-logo.png' alt='CodeUtsava Logo' width={1080} height={1080} />
-          </a>
-          <span aria-hidden='true' />
-          <a href='https://codeutsava.nitrr.ac.in/team' aria-label='Turing Club of Programmers'>
-            <Image src='/images/codeutsava/tcp-logo.png' alt='TCP Logo' width={1080} height={1080} />
-          </a>
-        </div>
-        <div className={styles.footerTopNote}>
-          <span>SIGNAL // CONNECTED</span>
-          <p>Follow us on social media for updates</p>
-        </div>
-      </div>
+      <div className={styles.footerContainer}>
+        {/* =========================================================================
+           1. TOP HEADER ROW: LOGOS (LEFT) | RETICLE (CENTER) | SOCIAL APPS (RIGHT)
+           ========================================================================= */}
+        <div className={styles.topRow}>
+          {/* Left: CodeUtsava + TCP Logos + Brand Text */}
+          <div className={styles.brandLogosGroup}>
+            <a href="#top" aria-label="CodeUtsava home" className={styles.logoItem}>
+              <Image
+                src="/images/codeutsava/codeutsava-logo.png"
+                alt="CodeUtsava Logo"
+                width={48}
+                height={48}
+                unoptimized
+                className="w-10 h-10 object-contain"
+              />
+            </a>
+            <a
+              href="https://codeutsava.nitrr.ac.in/team"
+              target="_blank"
+              rel="noreferrer"
+              aria-label="Turing Club of Programmers"
+              className={styles.logoItem}
+            >
+              <Image
+                src="/images/codeutsava/tcp-logo.png"
+                alt="TCP Logo"
+                width={48}
+                height={48}
+                className="w-10 h-10 object-contain"
+              />
+            </a>
 
-      <div className={styles.footerGrid}>
-        <section className={styles.about} aria-labelledby='about-nitrr'>
-          <div className={styles.nitHeading}>
-            <Image src='/images/codeutsava/nit-raipur-logo.webp' alt='NIT Raipur Logo' width={500} height={500} />
-            <div>
-              <p className={styles.eyebrow}>INSTITUTION // NITRR</p>
-              <h2 id='about-nitrr'>About NIT Raipur</h2>
+            <div className={styles.tcpBrandText}>
+              <span>TURING CLUB OF</span>
+              <span>PROGRAMMERS</span>
+              <span>NITRR</span>
             </div>
           </div>
-          <p>
-            NIT Raipur develops technical education by preparing graduates in advanced fields of engineering and technology. For decades, the institute has pursued this mission with sincerity and commitment.
-          </p>
-          <a className={styles.mapLink} href='https://www.google.com/maps/place/NIT+Raipur' target='_blank' rel='noreferrer'>
-            VIEW MAP LOCATION <span aria-hidden='true'>-&gt;</span>
-          </a>
-        </section>
 
-        <nav className={styles.footerNav} aria-label='Footer navigation'>
-          <p className={styles.eyebrow}>SITE MAP</p>
-          <a href='#top'>Home</a>
-          <a href='https://codeutsava.nitrr.ac.in/team'>TCP Team</a>
-          <a href='https://codeutsava.nitrr.ac.in/speakers'>Speakers</a>
-          <a href='#faq'>FAQ</a>
-          <a href='https://codeutsava.nitrr.ac.in/contact-us'>Contact Us</a>
-        </nav>
+          {/* Right: Application Brand Icons + Updates Subtitle */}
+          <div className={styles.socialsGroup}>
+            <div className={styles.socialIconsRow}>
+              {SOCIAL_APP_ICONS.map((app) => (
+                <a
+                  key={app.name}
+                  href={app.href}
+                  target="_blank"
+                  rel="noreferrer"
+                  title={app.name}
+                  aria-label={app.name}
+                  className={styles.socialIconLink}
+                >
+                  {app.svg}
+                </a>
+              ))}
+            </div>
 
-        <nav className={styles.socials} aria-label='Social media'>
-          <p className={styles.eyebrow}>OPEN CHANNELS</p>
-          {SOCIAL_LINKS.map(([label, href]) => (
-            <a href={href} key={label} target='_blank' rel='noreferrer'>
-              <span>{label}</span>
-              <span aria-hidden='true'>-&gt;</span>
+            <p className={styles.socialUpdatesNote}>
+              FOR MORE UPDATES,
+              <br />
+              FOLLOW US ON ALL SOCIAL MEDIA.
+            </p>
+          </div>
+        </div>
+
+        {/* =========================================================================
+           2. MIDDLE ROW: ABOUT NIT RAIPUR CARD (LEFT) & NAV LINKS (RIGHT)
+           ========================================================================= */}
+        <div className={styles.middleRow}>
+          {/* Left: FAQ-Styled Chamfered Cyberpunk Card with NIT Emblem & Mission */}
+          <div className={styles.aboutNitCard}>
+            <div className={styles.cardScanline} aria-hidden="true" />
+            <div className={styles.nitLogoWrap}>
+              <Image
+                src="/images/codeutsava/nit-raipur-logo.webp"
+                alt="NIT Raipur Logo"
+                width={80}
+                height={80}
+                className={styles.nitLogoImg}
+              />
+            </div>
+
+            <div className={styles.aboutContent}>
+              <h3 className={styles.aboutTitle}>ABOUT NIT RAIPUR</h3>
+              <p className={styles.aboutDescription}>
+                THE INSTITUTE IS DEDICATED TO ADVANCING TECHNICAL EDUCATION BY PRODUCING SKILLED
+                GRADUATES IN ENGINEERING AND TECHNOLOGY. FOR NEARLY FIVE DECADES, WE&apos;VE PURSUED
+                THIS MISSION WITH SINCERITY AND COMMITMENT AT NIT RAIPUR.
+              </p>
+            </div>
+          </div>
+
+          {/* Right: Right-Aligned Navigation Links */}
+          <nav className={styles.navLinksCol} aria-label="Footer Navigation">
+            {NAV_LINKS.map((link) => (
+              <a
+                key={link.label}
+                href={link.href}
+                className={styles.navLinkItem}
+              >
+                {link.label}
+              </a>
+            ))}
+          </nav>
+        </div>
+
+        {/* =========================================================================
+           3. BOTTOM BAR (3-WAY SPLIT)
+           ========================================================================= */}
+        <div className={styles.bottomRow}>
+          {/* Left: Architected By */}
+          <div className={styles.architectNote}>
+            ARCHITECTED WITH <span className="text-[#ff5fcf]">♥</span> BY{' '}
+            <a
+              href="https://codeutsava.nitrr.ac.in/team"
+              target="_blank"
+              rel="noreferrer"
+              className={styles.tcpTeamLink}
+            >
+              TCP TEAM
             </a>
-          ))}
-        </nav>
-      </div>
+          </div>
 
-      <div className={styles.footerBottom}>
-        <span>Architected by <a href='https://codeutsava.nitrr.ac.in/team'>TCP Team</a></span>
-        <span>PIXEL_TETRIS // RUNNING</span>
-        <a href='#top'>Back to Top</a>
+          {/* Center: Back to Top */}
+          <div>
+            <a href="#top" onClick={handleBackToTop} className={styles.backToTopLink}>
+              BACK TO TOP ↑
+            </a>
+          </div>
+
+          {/* Right: View Map Location + Audio Speaker Button */}
+          <div className={styles.bottomRightGroup}>
+            <a
+              href="https://www.google.com/maps/place/National+Institute+of+Technology+Raipur/@21.249722,81.605000,16z"
+              target="_blank"
+              rel="noreferrer"
+              className={styles.mapLocationBtn}
+            >
+              <MapPin size={14} className="text-[#ff5fcf]" />
+              <span>VIEW MAP LOCATION</span>
+            </a>
+
+            <button
+              type="button"
+              onClick={toggleMute}
+              className={styles.audioToggleButton}
+              title={isMuted ? 'Unmute Audio' : 'Mute Audio'}
+              aria-label={isMuted ? 'Unmute Audio' : 'Mute Audio'}
+            >
+              {!isMuted ? <Volume2 size={14} /> : <VolumeX size={14} />}
+            </button>
+          </div>
+        </div>
       </div>
     </footer>
   );

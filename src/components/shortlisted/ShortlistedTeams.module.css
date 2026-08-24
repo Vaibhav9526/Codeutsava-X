@@ -231,12 +231,35 @@
   transform: skewX(-15deg) translateX(-20%);
 }
 
-/* DYNAMIC HOVER GLITCH: COLOR CYCLING + RAPID DISPLACEMENT */
-.slotCard:hover,
-.slotCardHovered {
-  animation:
-    glitchColorCycle 0.3s steps(2, end) infinite,
-    cardGlitchJolt 0.22s steps(2, end) infinite;
+/* DYNAMIC HOVER GLITCH ON DESKTOP */
+@media (hover: hover) {
+  .slotCard:hover,
+  .slotCardHovered {
+    animation:
+      glitchColorCycle 0.3s steps(2, end) infinite,
+      cardGlitchJolt 0.22s steps(2, end) infinite;
+  }
+
+  .slotCard:hover::before,
+  .slotCardHovered::before {
+    animation: cardBeam 1.5s cubic-bezier(0.18, 0.72, 0.22, 1) infinite;
+  }
+
+  .slotCard:hover .unopenedView,
+  .slotCardHovered .unopenedView {
+    animation: iconJitter 0.2s steps(2, end) infinite;
+  }
+
+  .slotCard:hover .unopenedLabel,
+  .slotCardHovered .unopenedLabel {
+    animation: textColorGlitch 0.25s steps(2, end) infinite;
+  }
+
+  .slotCard:hover .teamName,
+  .slotCardHovered .teamName {
+    color: #ffffff;
+    text-shadow: 0 0 16px rgba(255, 95, 207, 0.8), 0 0 8px rgba(250, 235, 146, 0.9);
+  }
 }
 
 @keyframes glitchColorCycle {
@@ -285,11 +308,6 @@
   100% { transform: skewX(-6deg) translate(0, -6px); }
 }
 
-.slotCard:hover::before,
-.slotCardHovered::before {
-  animation: cardBeam 1.5s cubic-bezier(0.18, 0.72, 0.22, 1) infinite;
-}
-
 @keyframes cardBeam {
   0% { transform: skewX(-15deg) translateX(-60%); opacity: 0; }
   35% { opacity: 0.85; }
@@ -309,18 +327,13 @@
   align-items: center;
 }
 
-/* UNOPENED STATE & HOVER GLITCH JITTER */
+/* UNOPENED STATE */
 .unopenedView {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   gap: 8px;
-}
-
-.slotCard:hover .unopenedView,
-.slotCardHovered .unopenedView {
-  animation: iconJitter 0.2s steps(2, end) infinite;
 }
 
 @keyframes iconJitter {
@@ -340,12 +353,7 @@
   text-transform: uppercase;
 }
 
-.slotCard:hover .unopenedLabel,
-.slotCardHovered .unopenedLabel {
-  animation: textColorGlitch 0.25s steps(2, end) infinite;
-}
-
-/* OPENED STATE: ONLY TEAM NAME WITH REAL-TIME COLOR & POSITION GLITCH */
+/* OPENED STATE: TEAM NAME */
 .openedView {
   display: flex;
   align-items: center;
@@ -365,21 +373,15 @@
 .teamName {
   margin: 0;
   font-family: var(--font-mono);
-  font-size: clamp(18px, 1.8vw, 22px);
+  font-size: clamp(16px, 1.8vw, 22px);
   font-weight: 800;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.06em;
   text-transform: uppercase;
   color: #faeb92;
   text-shadow: 0 0 12px rgba(250, 235, 146, 0.35);
   word-break: break-word;
   line-height: 1.25;
   transition: color 0.15s ease, text-shadow 0.15s ease;
-}
-
-.slotCard:hover .teamName,
-.slotCardHovered .teamName {
-  color: #ffffff;
-  text-shadow: 0 0 16px rgba(255, 95, 207, 0.8), 0 0 8px rgba(250, 235, 146, 0.9);
 }
 
 /* SCANLINE & CORNER */
@@ -389,12 +391,6 @@
   pointer-events: none;
   background: repeating-linear-gradient(to bottom, transparent 0 3px, rgba(0, 0, 0, 0.25) 3px 4px);
   opacity: 0.25;
-}
-
-.slotCard:hover .cardScanline,
-.slotCardHovered .cardScanline {
-  opacity: 0.6;
-  background: repeating-linear-gradient(to bottom, transparent 0 2px, rgba(255, 95, 207, 0.3) 2px 4px);
 }
 
 .cardCorner {
@@ -407,28 +403,92 @@
   box-shadow: 0 0 6px var(--pink);
 }
 
-@media (max-width: 1024px) {
-  .slotsGrid {
-    grid-template-columns: repeat(2, 1fr);
+/* 3 COLUMNS IN A ROW FOR ANDROID & MOBILE (< 768px) */
+@media (max-width: 768px) {
+  .section {
+    padding: clamp(32px, 5vw, 54px) clamp(22px, 6vw, 36px);
   }
-}
 
-@media (max-width: 640px) {
+  .heading {
+    width: 100%;
+    margin-bottom: 20px;
+  }
+
   .slotsGrid {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(3, 1fr);
+    gap: clamp(8px, 2.5vw, 12px);
+    width: 100%;
   }
 
   .slotCard {
-    transform: none;
-    height: 120px;
+    transform: skewX(-6deg);
+    height: 76px;
+    padding: 6px 3px;
+    box-shadow: inset 0 0 14px rgba(153, 41, 234, 0.15), 0 4px 10px rgba(0, 0, 0, 0.5);
   }
 
-  .slotCard:hover {
-    transform: translateY(-4px);
-    animation: none;
+  .slotCard:active {
+    transform: skewX(-6deg) scale(0.97);
   }
 
   .cardInner {
-    transform: none;
+    transform: skewX(6deg);
+  }
+
+  .unopenedView {
+    gap: 2px;
+  }
+
+  .unopenedLabel {
+    font-size: 6.8px;
+    letter-spacing: 0.03em;
+  }
+
+  .teamName {
+    font-size: clamp(9.5px, 2.4vw, 11.5px);
+    letter-spacing: 0.02em;
+    line-height: 1.15;
+  }
+
+  .controlsBar {
+    padding: 6px 12px;
+    font-size: 8px;
+    margin-bottom: 14px;
+    width: 100%;
+  }
+
+  .ctrlBtn {
+    font-size: 7.5px;
+    padding: 3px 8px;
+  }
+}
+
+@media (max-width: 480px) {
+  .section {
+    padding: 28px 24px;
+  }
+
+  .slotsGrid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+  }
+
+  .slotCard {
+    transform: skewX(-6deg);
+    height: 72px;
+    padding: 4px 2px;
+  }
+
+  .cardInner {
+    transform: skewX(6deg);
+  }
+
+  .unopenedLabel {
+    font-size: 6.2px;
+    letter-spacing: 0.01em;
+  }
+
+  .teamName {
+    font-size: 10px;
   }
 }

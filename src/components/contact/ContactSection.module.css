@@ -69,7 +69,7 @@
 
 .flameBackdrop {
   z-index: 0;
-  opacity: 0.55;
+  opacity: 0.72;
   filter: saturate(1.08) contrast(1.12);
   pointer-events: none;
 }
@@ -398,6 +398,19 @@
   .contactSection {
     min-height: auto;
     padding-top: 80px;
+  }
+
+  .panelScrim {
+    background:
+      repeating-linear-gradient(to bottom, transparent 0 3px, rgba(0, 0, 0, 0.18) 3px 4px),
+      radial-gradient(circle at 50% 50%, transparent 0 25%, rgba(0, 0, 0, 0.3) 65%, rgba(0, 0, 0, 0.7) 100%),
+      linear-gradient(to bottom, rgba(0, 0, 0, 0.7) 0, rgba(0, 0, 0, 0.35) 40%, rgba(0, 0, 0, 0.7) 100%);
+  }
+
+  .formCard,
+  .mapCard {
+    background: rgba(8, 2, 14, 0.78);
+    backdrop-filter: blur(8px);
   }
 
   .contactLayout {

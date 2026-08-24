@@ -1,0 +1,393 @@
+.footer {
+  --purple: #9929ea;
+  --pink: #ff5fcf;
+  --cream: #faeb92;
+  --black: #000000;
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  padding: clamp(36px, 5vw, 64px) clamp(20px, 5vw, 84px) 24px;
+  border-top: 1px solid rgba(255, 95, 207, 0.5);
+  background: transparent;
+  color: var(--cream);
+  font-family: 'Satoshi', var(--font-body), sans-serif;
+}
+
+.tetrisField,
+.footerShade {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.tetrisField {
+  inset: 0 0 0 46%;
+  opacity: 0.65;
+  filter: saturate(1.05);
+  mask-image: linear-gradient(90deg, transparent, black 24%);
+  z-index: -2;
+}
+
+.footerShade {
+  z-index: -1;
+  background:
+    linear-gradient(90deg, rgba(3, 1, 6, 0.92) 0 35%, rgba(3, 1, 6, 0.78) 65%, rgba(3, 1, 6, 0.2)),
+    linear-gradient(to bottom, rgba(3, 1, 6, 0.85) 0%, transparent 35%, rgba(3, 1, 6, 0.7) 80%, rgba(3, 1, 6, 0.95) 100%);
+}
+
+.footerContainer {
+  width: 100%;
+  max-width: 1440px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: clamp(28px, 4vw, 48px);
+}
+
+/* =========================================================================
+   1. TOP HEADER ROW: LOGOS (LEFT) | SOCIALS (RIGHT)
+   ========================================================================= */
+.topRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  width: 100%;
+}
+
+.brandLogosGroup {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.logoItem {
+  display: block;
+  transition: transform 0.2s ease, filter 0.2s ease;
+}
+
+.logoItem:hover {
+  transform: translateY(-2px);
+  filter: drop-shadow(0 0 10px rgba(255, 95, 207, 0.6));
+}
+
+.tcpBrandText {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.25;
+}
+
+.tcpBrandText span {
+  font-family: 'Satoshi', var(--font-body), sans-serif;
+  font-size: 10.5px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  color: #ffffff;
+  text-transform: uppercase;
+}
+
+.tcpBrandText span:last-child {
+  color: rgba(250, 235, 146, 0.75);
+}
+
+/* Social Media Applications Row on Right */
+.socialsGroup {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 6px;
+  text-align: right;
+}
+
+.socialIconsRow {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.socialIconLink {
+  color: #ffffff;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+}
+
+.socialIconLink:hover {
+  color: var(--pink);
+  transform: scale(1.15) translateY(-2px);
+  filter: drop-shadow(0 0 10px rgba(255, 95, 207, 0.9));
+}
+
+.socialUpdatesNote {
+  margin: 0;
+  font-family: 'Satoshi', var(--font-body), sans-serif;
+  font-size: 8.5px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  color: rgba(250, 235, 146, 0.65);
+  text-transform: uppercase;
+  line-height: 1.35;
+}
+
+/* =========================================================================
+   2. MIDDLE ROW: FAQ-STYLED ABOUT NIT RAIPUR CARD (LEFT) & NAV LINKS (RIGHT)
+   ========================================================================= */
+.middleRow {
+  display: grid;
+  grid-template-columns: minmax(0, 1.45fr) minmax(0, 1fr);
+  gap: clamp(24px, 5vw, 64px);
+  align-items: center;
+}
+
+/* FAQ-Styled Chamfered Cyberpunk Card for "About NIT Raipur" */
+.aboutNitCard {
+  position: relative;
+  background: #050207;
+  border: 1px solid rgba(255, 95, 207, 0.7);
+  box-shadow: 12px 12px 0 rgba(153, 41, 234, 0.16), 0 0 50px rgba(153, 41, 234, 0.12);
+  clip-path: polygon(0 0, calc(100% - 32px) 0, 100% 32px, 100% 100%, 0 100%);
+  padding: clamp(18px, 2.5vw, 26px);
+  display: flex;
+  align-items: center;
+  gap: clamp(16px, 2.5vw, 24px);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  overflow: hidden;
+}
+
+.aboutNitCard::before {
+  content: "";
+  position: absolute;
+  z-index: 3;
+  top: 0;
+  right: 0;
+  width: 32px;
+  height: 32px;
+  border-left: 1px solid rgba(255, 95, 207, 0.7);
+  transform: rotate(-45deg) translate(-11px, -5px);
+  transform-origin: center;
+}
+
+.aboutNitCard:hover {
+  border-color: #ff5fcf;
+  box-shadow: 14px 14px 0 rgba(153, 41, 234, 0.24), 0 0 60px rgba(255, 95, 207, 0.25);
+}
+
+.cardScanline {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: repeating-linear-gradient(to bottom, transparent 0 3px, rgba(0, 0, 0, 0.24) 3px 4px);
+  opacity: 0.35;
+  z-index: 1;
+}
+
+.nitLogoWrap {
+  position: relative;
+  z-index: 2;
+  flex-shrink: 0;
+  width: clamp(68px, 8vw, 92px);
+  height: clamp(68px, 8vw, 92px);
+  display: grid;
+  place-items: center;
+}
+
+.nitLogoImg {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  border-radius: 50%;
+}
+
+.aboutContent {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.aboutTitle {
+  margin: 0;
+  font-family: 'Satoshi', var(--font-body), sans-serif;
+  font-size: clamp(13px, 1.2vw, 16px);
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  color: var(--cream);
+  text-transform: uppercase;
+  text-shadow: 0 0 8px rgba(250, 235, 146, 0.4);
+}
+
+.aboutDescription {
+  margin: 0;
+  font-family: 'Satoshi', var(--font-body), sans-serif;
+  font-size: clamp(9.5px, 0.86vw, 11px);
+  line-height: 1.55;
+  letter-spacing: 0.04em;
+  color: rgba(250, 235, 146, 0.82);
+  text-transform: uppercase;
+  font-weight: 500;
+}
+
+/* Right Aligned Navigation Links */
+.navLinksCol {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  justify-content: center;
+  gap: clamp(8px, 1.2vw, 14px);
+  text-align: right;
+}
+
+.navLinkItem {
+  font-family: 'Satoshi', var(--font-body), sans-serif;
+  font-size: clamp(13px, 1.2vw, 17px);
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  color: #ffffff;
+  text-decoration: none;
+  text-transform: uppercase;
+  transition: all 0.18s ease;
+}
+
+.navLinkItem:hover {
+  color: var(--pink);
+  transform: translateX(-4px);
+  text-shadow: 0 0 12px rgba(255, 95, 207, 0.8);
+}
+
+/* =========================================================================
+   3. BOTTOM BAR (3-WAY SPLIT)
+   ========================================================================= */
+.bottomRow {
+  padding-top: 18px;
+  border-top: 1px solid rgba(250, 235, 146, 0.18);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  font-family: 'Satoshi', var(--font-body), sans-serif;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(250, 235, 146, 0.75);
+}
+
+.architectNote {
+  color: #ffffff;
+}
+
+.tcpTeamLink {
+  color: var(--cream);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  font-weight: 800;
+  transition: color 0.18s ease;
+}
+
+.tcpTeamLink:hover {
+  color: var(--pink);
+  text-shadow: 0 0 10px var(--pink);
+}
+
+.backToTopLink {
+  color: var(--cream);
+  text-decoration: none;
+  font-weight: 800;
+  transition: all 0.18s ease;
+}
+
+.backToTopLink:hover {
+  color: var(--pink);
+  transform: translateY(-2px);
+  text-shadow: 0 0 10px var(--pink);
+}
+
+.bottomRightGroup {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.mapLocationBtn {
+  color: #ffffff;
+  text-decoration: none;
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.18s ease;
+}
+
+.mapLocationBtn:hover {
+  color: var(--pink);
+  text-shadow: 0 0 10px var(--pink);
+}
+
+.audioToggleButton {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  border: 1px solid #faeb92;
+  background: #faeb92;
+  color: #000000;
+  cursor: pointer;
+  transition: all 0.18s ease;
+}
+
+.audioToggleButton:hover {
+  background: var(--pink);
+  border-color: var(--pink);
+  color: #ffffff;
+  box-shadow: 0 0 12px var(--pink);
+  transform: scale(1.05);
+}
+
+/* =========================================================================
+   RESPONSIVE LAYOUT
+   ========================================================================= */
+@media (max-width: 900px) {
+  .topRow {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+  }
+
+  .socialsGroup {
+    align-items: flex-start;
+    text-align: left;
+  }
+
+  .middleRow {
+    grid-template-columns: 1fr;
+    gap: 28px;
+  }
+
+  .aboutNitCard {
+    flex-direction: column;
+    text-align: center;
+    align-items: center;
+  }
+
+  .navLinksCol {
+    align-items: flex-start;
+    text-align: left;
+  }
+
+  .navLinkItem:hover {
+    transform: translateX(4px);
+  }
+
+  .bottomRow {
+    flex-direction: column;
+    text-align: center;
+    gap: 14px;
+  }
+
+  .bottomRightGroup {
+    justify-content: center;
+  }
+}

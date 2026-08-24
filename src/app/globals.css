@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Geist+Mono:wght@100..900&family=Geist:wght@100..900&family=Press+Start+2P&family=Silkscreen:wght@400;700&display=swap');
+@import url('https://api.fontshare.com/v2/css?f[]=satoshi@400,500,700,800,900&display=swap');
 @import "tailwindcss";
 @source "../components/originkit";
 @source "../components/timeline";
@@ -18,7 +19,8 @@
   --purple: #9929ea;
   --font-display: "Cyber City", Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif;
   --font-brand: "Cyber City", Impact, sans-serif;
-  --font-body: "Arial Narrow", "Helvetica Neue", Arial, sans-serif;
+  --font-body: "Satoshi", "Arial Narrow", "Helvetica Neue", Arial, sans-serif;
+  --font-satoshi: "Satoshi", sans-serif;
   --font-mono: "Courier New", Courier, monospace;
   --font-screen: "Lucida Console", "Courier New", Courier, monospace;
   color-scheme: dark;
