@@ -36,7 +36,6 @@
 
 .heading h2 {
   position: relative;
-  isolation: isolate;
   width: fit-content;
   margin: 10px auto;
   color: var(--cream);
@@ -45,62 +44,13 @@
   font-weight: 900;
   letter-spacing: -0.05em;
   line-height: 0.88;
-  text-shadow: 7px 0 rgba(153, 41, 234, 0.5), -4px 0 rgba(255, 95, 207, 0.35);
+  text-shadow: 7px 0 rgba(153, 41, 234, 0.75), -4px 0 rgba(255, 95, 207, 0.45);
   text-transform: uppercase;
-  animation: titleJolt 4.8s steps(1, end) infinite;
 }
 
 .heading h2::before,
 .heading h2::after {
-  content: attr(data-text);
-  position: absolute;
-  inset: 0;
-  z-index: 1;
-  pointer-events: none;
-  opacity: 0;
-}
-
-.heading h2::before {
-  color: var(--pink);
-  text-shadow: -7px 0 rgba(153, 41, 234, 0.92);
-  animation: titleGlitchTop 4.8s steps(1, end) infinite;
-}
-
-.heading h2::after {
-  color: transparent;
-  -webkit-text-stroke: 1px rgba(250, 235, 146, 0.78);
-  text-shadow: 7px 0 rgba(255, 95, 207, 0.8);
-  animation: titleGlitchBottom 4.8s steps(1, end) infinite;
-}
-
-@keyframes titleJolt {
-  0%, 48%, 55%, 100% { transform: translate(0) skewX(0); filter: none; }
-  49% { transform: translate(-5px, 1px) skewX(-2deg); filter: brightness(1.4); }
-  50% { transform: translate(6px, -2px) skewX(3deg); }
-  51% { transform: translate(-3px, 1px) skewX(-1deg); }
-  52% { transform: translate(2px) skewX(0.5deg); }
-  82% { transform: translate(-3px) skewX(-1deg); }
-  83% { transform: translate(4px, 1px) skewX(2deg); }
-}
-
-@keyframes titleGlitchTop {
-  0%, 48%, 54%, 81%, 84%, 100% { opacity: 0; transform: translate(0); clip-path: inset(0); }
-  49% { opacity: 0.9; transform: translate(-9px, -2px); clip-path: inset(0 0 63% 0); }
-  50% { opacity: 0.72; transform: translate(7px, 2px); clip-path: inset(21% 0 42% 0); }
-  51% { opacity: 0.94; transform: translate(-5px); clip-path: inset(52% 0 16% 0); }
-  52% { opacity: 0.42; transform: translate(3px); clip-path: inset(6% 0 74% 0); }
-  82% { opacity: 0.76; transform: translate(-6px); clip-path: inset(71% 0 3% 0); }
-  83% { opacity: 0.48; transform: translate(4px); clip-path: inset(9% 0 68% 0); }
-}
-
-@keyframes titleGlitchBottom {
-  0%, 48%, 54%, 81%, 84%, 100% { opacity: 0; transform: translate(0); clip-path: inset(0); }
-  49% { opacity: 0.76; transform: translate(9px, 2px); clip-path: inset(69% 0 0 0); }
-  50% { opacity: 0.9; transform: translate(-6px, -1px); clip-path: inset(47% 0 18% 0); }
-  51% { opacity: 0.62; transform: translate(5px); clip-path: inset(12% 0 60% 0); }
-  52% { opacity: 0.3; transform: translate(-2px); clip-path: inset(78% 0 3% 0); }
-  82% { opacity: 0.74; transform: translate(7px); clip-path: inset(4% 0 72% 0); }
-  83% { opacity: 0.38; transform: translate(-3px); clip-path: inset(63% 0 8% 0); }
+  display: none;
 }
 
 .eyebrow {

@@ -135,7 +135,7 @@ export function ShortlistedTeams() {
           <span className={styles.eyebrowDot} />
           CYBERNETIC DATA VAULT // X.0
         </p>
-        <h2 id="shortlist-title" data-text="TEAMS   SHORTLISTED">TEAMS   SHORTLISTED</h2>
+        <h2 id="shortlist-title">TEAMS SHORTLISTED</h2>
       </div>
 
       {/* Master Controls Bar */}
