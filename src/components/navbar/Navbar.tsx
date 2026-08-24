@@ -36,10 +36,6 @@ function smoothScrollTo(targetSelector: string) {
   }
 }
 
-function markIntroEntered() {
-  sessionStorage.setItem("glitchverse_entered", "true");
-}
-
 interface NavItemProps {
   href: string;
   children: React.ReactNode;
@@ -54,7 +50,6 @@ const NavItem: React.FC<NavItemProps> = ({ href, children, target }) => {
 
     if (href.startsWith("/")) {
       event.preventDefault();
-      markIntroEntered();
       router.push(href);
       return;
     }
@@ -63,7 +58,6 @@ const NavItem: React.FC<NavItemProps> = ({ href, children, target }) => {
 
     event.preventDefault();
     if (window.location.pathname !== "/") {
-      markIntroEntered();
       router.push(`/${href}`);
       return;
     }
@@ -100,7 +94,6 @@ const MobileNavLink = ({
       onClick={(event) => {
         if (href.startsWith("/")) {
           event.preventDefault();
-          markIntroEntered();
           router.push(href);
           setMobileOpen(false);
           return;
@@ -109,7 +102,6 @@ const MobileNavLink = ({
         if (href.startsWith("#")) {
           event.preventDefault();
           if (window.location.pathname !== "/") {
-            markIntroEntered();
             router.push(`/${href}`);
             setMobileOpen(false);
             return;
@@ -144,8 +136,7 @@ export function Navbar({ variant = "default" }: { variant?: "default" | "back-to
   const handleHomeClick = (event: React.MouseEvent<HTMLAnchorElement>) => {
     event.preventDefault();
     if (isBackToHome) {
-      markIntroEntered();
-      router.push("/?skipIntro=true");
+      router.push("/");
       setMobileOpen(false);
       return;
     }
@@ -153,7 +144,7 @@ export function Navbar({ variant = "default" }: { variant?: "default" | "back-to
     setMobileOpen(false);
   };
 
-  const homeHref = isBackToHome ? "/?skipIntro=true" : "#top";
+  const homeHref = isBackToHome ? "/" : "#top";
 
   return (
     <>
@@ -197,7 +188,7 @@ export function Navbar({ variant = "default" }: { variant?: "default" | "back-to
         {isLargeScreen ? (
           <nav className={styles.navLinks} aria-label="Primary navigation">
             {isBackToHome ? (
-              <NavItem href="/?skipIntro=true">BACK TO HOME</NavItem>
+              <NavItem href="/">BACK TO HOME</NavItem>
             ) : (
               <>
                 <NavItem href="#top">HOME</NavItem>
@@ -268,7 +259,7 @@ export function Navbar({ variant = "default" }: { variant?: "default" | "back-to
         >
           <div className="flex flex-col font-sans">
             {isBackToHome ? (
-              <MobileNavLink href="/?skipIntro=true" setMobileOpen={setMobileOpen}>
+              <MobileNavLink href="/" setMobileOpen={setMobileOpen}>
                 BACK TO HOME
               </MobileNavLink>
             ) : (

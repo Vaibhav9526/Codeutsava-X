@@ -1,32 +1,52 @@
 "use client";
 
 import Image from "next/image";
-import { useEffect, useRef, useState, type CSSProperties, type ReactNode } from "react";
-import { GradientButton } from "@/components/ui/gradient-button";
+import {
+  useEffect,
+  useRef,
+  useState,
+  type CSSProperties,
+  type ReactNode,
+} from "react";
 import styles from "./ExperienceShell.module.css";
 
 const GLYPHS = [..."CODEUTSAVA", " ", ..."X", ".O"];
 
 export function ExperienceShell({ children }: { children: ReactNode }) {
-  const [entered, setEntered] = useState<boolean>(() => {
-    if (typeof window !== "undefined") {
-      return (
-        sessionStorage.getItem("glitchverse_entered") === "true" ||
-        new URLSearchParams(window.location.search).get("skipIntro") === "true"
-      );
-    }
-    return false;
-  });
-  const [ready, setReady] = useState(() => entered);
+  const [entered, setEntered] = useState(false);
+  const [heroMounted, setHeroMounted] = useState(false);
+  const [ready, setReady] = useState(false);
   const [entering, setEntering] = useState(false);
-  const compactModeRef = useRef(false);
+  const reducedMotionRef = useRef(false);
+  const transitionTimerRef = useRef<number | null>(null);
+
+  useEffect(() => {
+    const idleWindow = window as Window & {
+      requestIdleCallback?: (callback: () => void, options?: { timeout: number }) => number;
+      cancelIdleCallback?: (handle: number) => void;
+    };
+    let fallbackTimer: number | null = null;
+    const idleHandle = idleWindow.requestIdleCallback?.(
+      () => setHeroMounted(true),
+      { timeout: 1200 },
+    );
+
+    if (idleHandle === undefined) {
+      fallbackTimer = window.setTimeout(() => setHeroMounted(true), 350);
+    }
+
+    return () => {
+      if (idleHandle !== undefined) idleWindow.cancelIdleCallback?.(idleHandle);
+      if (fallbackTimer !== null) window.clearTimeout(fallbackTimer);
+    };
+  }, []);
 
   useEffect(() => {
     const compactQuery = window.matchMedia('(max-width: 760px), (hover: none) and (pointer: coarse)');
     const reducedMotionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
     const compact = compactQuery.matches || reducedMotionQuery.matches;
 
-    compactModeRef.current = compact;
+    reducedMotionRef.current = reducedMotionQuery.matches;
     const timer = window.setTimeout(() => setReady(true), compact ? 700 : 2350);
     return () => window.clearTimeout(timer);
   }, []);
@@ -43,17 +63,29 @@ export function ExperienceShell({ children }: { children: ReactNode }) {
     };
   }, [entered]);
 
+  useEffect(() => {
+    return () => {
+      if (transitionTimerRef.current !== null) {
+        window.clearTimeout(transitionTimerRef.current);
+      }
+    };
+  }, []);
+
   const enter = () => {
     if (!ready || entering) return;
+    setHeroMounted(true);
     setEntering(true);
-    window.setTimeout(() => setEntered(true), compactModeRef.current ? 420 : 1450);
+    transitionTimerRef.current = window.setTimeout(() => {
+      setEntered(true);
+      transitionTimerRef.current = null;
+    }, reducedMotionRef.current ? 180 : 640);
   };
 
   return (
     <div
       className={`${styles.experience} ${entering ? styles.entering : ""} ${entered ? styles.entered : ""}`}
     >
-      <div className={styles.site}>{children}</div>
+      <div className={styles.site}>{heroMounted ? children : null}</div>
       {!entered && (
         <div className={styles.transitionStage} aria-live="polite">
           <div className={styles.bootViewport}>
@@ -103,14 +135,13 @@ export function ExperienceShell({ children }: { children: ReactNode }) {
                     ))}
                   </div>
                 ) : (
-                  <GradientButton
-                    className="min-h-[52px] w-full gap-4 px-6 font-mono text-[clamp(.68rem,.92vw,.84rem)] tracking-[.12em]"
+                  <button
+                    className={styles.enterButton}
                     type="button"
                     onClick={enter}
                   >
                     <span>ENTER THE GLITCHVERSE</span>
-                    <span aria-hidden="true">-&gt;</span>
-                  </GradientButton>
+                  </button>
                 )}
               </div>
               <p className={styles.copyright}>
@@ -118,6 +149,20 @@ export function ExperienceShell({ children }: { children: ReactNode }) {
                 Reserved.
               </p>
             </section>
+            <div className={styles.glitchBars} aria-hidden="true">
+              {Array.from({ length: 9 }, (_, index) => (
+                <span
+                  key={index}
+                  style={{
+                    "--bar-index": index,
+                    "--tear-a": `${(index - 4) * 7}px`,
+                    "--tear-b": `${(4 - index) * 11}px`,
+                    "--tear-c": `${(index - 5) * 15}px`,
+                    "--tear-d": `${(5 - index) * 13}px`,
+                  } as CSSProperties}
+                />
+              ))}
+            </div>
           </div>
           <div className={styles.flash} aria-hidden="true" />
         </div>

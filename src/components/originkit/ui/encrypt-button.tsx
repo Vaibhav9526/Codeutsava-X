@@ -118,7 +118,9 @@ export default function EncryptButton({
   const animationFrame = useRef<number | null>(null);
   const config = useRef({ label, scrambleOptions });
 
-  config.current = { label, scrambleOptions };
+  useEffect(() => {
+    config.current = { label, scrambleOptions };
+  }, [label, scrambleOptions]);
 
   const borderWidth = border ? (borderOptions.width ?? DEFAULTS.borderOptions.width) : 0;
   const sweepSeconds = mapSlider(

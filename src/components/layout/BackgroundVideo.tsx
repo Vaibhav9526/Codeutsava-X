@@ -9,6 +9,7 @@ export function BackgroundVideo() {
         loop
         muted
         playsInline
+        preload="metadata"
         className="w-full h-full object-cover"
       >
         <source src="/videos/bg-video.mp4" type="video/mp4" />
