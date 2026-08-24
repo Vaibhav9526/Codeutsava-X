@@ -12,7 +12,7 @@
 .faq {
   position: relative;
   isolation: isolate;
-  padding: clamp(72px, 10vw, 150px) clamp(24px, 6vw, 96px);
+  padding: clamp(44px, 5vw, 72px) clamp(20px, 4vw, 64px);
   background:
     linear-gradient(rgba(250, 235, 146, 0.025) 1px, transparent 1px),
     linear-gradient(90deg, rgba(250, 235, 146, 0.025) 1px, transparent 1px),
@@ -23,10 +23,10 @@
 
 .signalLine {
   position: absolute;
-  top: 30px;
-  right: clamp(24px, 6vw, 96px);
-  left: clamp(24px, 6vw, 96px);
-  padding-bottom: 13px;
+  top: 16px;
+  right: clamp(20px, 4vw, 64px);
+  left: clamp(20px, 4vw, 64px);
+  padding-bottom: 8px;
   border-bottom: 1px solid rgba(250, 235, 146, 0.2);
   display: flex;
   justify-content: space-between;
@@ -267,7 +267,7 @@
   position: relative;
   width: 100%;
   max-width: 1440px;
-  min-height: 820px;
+  min-height: 0;
   margin: 0 auto;
   overflow: hidden;
   border: 1px solid rgba(255, 95, 207, 0.7);
@@ -312,20 +312,20 @@
 .faqPanelContent {
   position: relative;
   z-index: 2;
-  padding: clamp(34px, 5vw, 72px);
+  padding: clamp(22px, 2.8vw, 38px);
 }
 
 .faqIntro {
   width: 100%;
-  margin: 0 0 clamp(42px, 6vw, 72px);
+  margin: 0 0 clamp(18px, 2.5vw, 28px);
   display: grid;
   grid-template-columns: minmax(0, 1fr) auto;
   align-items: start;
-  gap: clamp(32px, 6vw, 90px);
+  gap: clamp(20px, 3vw, 44px);
 }
 
 .eyebrow {
-  margin: 0 0 18px;
+  margin: 0 0 9px;
   color: var(--pink);
   font-family: var(--font-mono);
   font-size: 9px;
@@ -335,7 +335,7 @@
 
 .faqIntro h2 {
   margin: 0;
-  font-size: clamp(72px, 11vw, 180px);
+  font-size: clamp(36px, 5.5vw, 90px);
   font-weight: 900;
   letter-spacing: -0.07em;
   line-height: 0.72;
@@ -345,10 +345,10 @@
 
 .introCopy {
   max-width: 520px;
-  margin: clamp(36px, 5vw, 64px) 0 0;
+  margin: clamp(12px, 1.8vw, 20px) 0 0;
   color: rgba(250, 235, 146, 0.66);
-  font-size: clamp(14px, 1.3vw, 18px);
-  line-height: 1.6;
+  font-size: clamp(12px, 1vw, 15px);
+  line-height: 1.45;
 }
 
 .introCopy strong {
@@ -357,12 +357,12 @@
 }
 
 .faqStatus {
-  min-width: 235px;
-  padding: 18px;
+  min-width: 190px;
+  padding: 12px;
   border: 1px solid rgba(250, 235, 146, 0.32);
   background: rgba(0, 0, 0, 0.58);
   display: grid;
-  gap: 13px;
+  gap: 8px;
   color: rgba(250, 235, 146, 0.64);
   font-family: var(--font-mono);
   font-size: 8px;
@@ -389,7 +389,7 @@
   width: 100%;
   margin: 0;
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-columns: 1fr;
   align-items: start;
   border-top: 1px solid rgba(250, 235, 146, 0.28);
 }
@@ -401,22 +401,22 @@
 }
 
 .faqItem:nth-child(odd) {
-  border-right: 1px solid rgba(250, 235, 146, 0.22);
+  border-right: 0;
 }
 
 .faqItem button {
   width: 100%;
-  min-height: 92px;
-  padding: 22px clamp(18px, 2.5vw, 36px);
+  min-height: 48px;
+  padding: 10px clamp(14px, 1.8vw, 24px);
   border: 0;
   background: rgba(0, 0, 0, 0.24);
   color: var(--cream);
   display: grid;
-  grid-template-columns: 34px 1fr auto;
+  grid-template-columns: 28px 1fr auto;
   align-items: center;
-  gap: 16px;
+  gap: 10px;
   font: inherit;
-  font-size: clamp(13px, 1.15vw, 17px);
+  font-size: clamp(12px, 0.95vw, 14px);
   font-weight: 800;
   line-height: 1.25;
   text-align: left;
@@ -461,13 +461,13 @@
 
 .toggle {
   font-family: var(--font-mono);
-  font-size: 28px;
+  font-size: 20px;
   font-weight: 400;
   line-height: 1;
 }
 
 .answer {
-  padding: 0 clamp(24px, 4vw, 84px) 30px;
+  padding: 0 clamp(52px, 5vw, 68px) 12px;
   background: var(--pink);
   color: var(--black);
   animation: answerDecrypt 360ms steps(4, end);
@@ -476,8 +476,8 @@
 .answer p {
   max-width: 620px;
   margin: 0;
-  font-size: 14px;
-  line-height: 1.65;
+  font-size: 12px;
+  line-height: 1.45;
 }
 
 @keyframes faqJitter {
@@ -841,11 +841,11 @@
   }
 
   .faq {
-    padding: 64px 14px;
+    padding: 38px 12px 20px;
     background:
       radial-gradient(circle at 88% 18%, rgba(153, 41, 234, 0.16), transparent 34%),
       #000000;
-    contain-intrinsic-size: 900px;
+    contain-intrinsic-size: 520px;
   }
 
   .faqPanel {
@@ -886,7 +886,7 @@
   }
 
   .faqIntro h2 {
-    font-size: clamp(62px, 22vw, 92px);
+    font-size: clamp(34px, 14vw, 52px);
   }
 
   .faqPanel {
@@ -895,16 +895,16 @@
   }
 
   .faqPanelContent {
-    padding: 28px 18px 22px;
+    padding: 16px 12px 14px;
   }
 
   .faqIntro {
     grid-template-columns: 1fr;
+    margin-bottom: 12px;
   }
 
   .faqStatus {
-    min-width: 0;
-    grid-template-columns: 1fr 1fr;
+    display: none;
   }
 
   .faqStatus span:last-child {
@@ -912,14 +912,40 @@
   }
 
   .faqItem button {
-    min-height: 80px;
-    grid-template-columns: 28px 1fr auto;
-    gap: 10px;
-    font-size: 12px;
+    min-height: 40px;
+    padding: 7px 9px;
+    grid-template-columns: 22px 1fr auto;
+    gap: 7px;
+    font-size: 10px;
+    line-height: 1.2;
   }
 
   .answer {
-    padding-inline: 52px 24px;
+    padding: 0 30px 9px 38px;
+  }
+
+  .answer p {
+    font-size: 9.5px;
+    line-height: 1.35;
+  }
+
+  .eyebrow {
+    margin-bottom: 6px;
+    font-size: 7px;
+  }
+
+  .introCopy {
+    margin-top: 8px;
+    font-size: 10.5px;
+    line-height: 1.35;
+  }
+
+  .fileNumber {
+    font-size: 7px;
+  }
+
+  .toggle {
+    font-size: 17px;
   }
 
   .footerTop {

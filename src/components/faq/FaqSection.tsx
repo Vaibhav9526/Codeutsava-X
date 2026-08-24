@@ -11,7 +11,7 @@ const AsciiFire = dynamic(() => import('@/components/originkit/ui/ascii-flame'),
 });
 
 export function FaqSection() {
-  const [openFaq, setOpenFaq] = useState<number | null>(0);
+  const [openFaq, setOpenFaq] = useState<number | null>(null);
   const richEffects = useRichEffects();
 
   return (
