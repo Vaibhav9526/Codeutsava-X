@@ -43,7 +43,7 @@ export const TimelineRoad: React.FC = () => {
   const [scrollProgress, setScrollProgress] = useState<number>(0);
   const [isMuted, setIsMuted] = useState<boolean>(retroAudio.getMuted());
 
-  // STICKY SCROLL PROGRESS TRACKING (Optimized with rAF & Threshold Deadband)
+  // STICKY SCROLL PROGRESS TRACKING
   useEffect(() => {
     let ticking = false;
     let lastProgress = -1;
@@ -59,7 +59,6 @@ export const TimelineRoad: React.FC = () => {
 
       if (totalScrollDistance > 0) {
         const progress = Math.max(0, Math.min(1, currentScrollTop / totalScrollDistance));
-        // Only update state if delta exceeds precision threshold to prevent unnecessary React re-renders
         if (Math.abs(progress - lastProgress) > 0.0002 || progress === 0 || progress === 1) {
           lastProgress = progress;
           setScrollProgress(progress);
@@ -99,15 +98,15 @@ export const TimelineRoad: React.FC = () => {
   };
 
   return (
-    // Tall sticky scroll container with smooth continuous road travel
+    // Sticky scroll container with runway for all 9 stages + empty space
     <section
       id="timeline"
       ref={stickyContainerRef}
       className="relative w-full bg-transparent"
-      style={{ height: `${(TIMELINE_EVENTS.length + 2) * 72}vh` }}
+      style={{ height: `${(TIMELINE_EVENTS.length + 2.5) * 75}vh` }}
     >
       {/* FULLSCREEN PINNED STICKY VIEWPORT (100vw x 100vh) */}
-      <div className="sticky top-0 w-full h-screen overflow-hidden flex flex-col justify-between select-none">
+      <div className="sticky top-0 w-full h-[100svh] overflow-hidden flex flex-col justify-between select-none">
 
         {/* 1. FULL-BLEED 3D PERSPECTIVE CANVAS */}
         <TimelineCanvas3D
@@ -119,9 +118,9 @@ export const TimelineRoad: React.FC = () => {
         />
 
         {/* 2. TOP FLOATING HUD OVERLAY */}
-        <div className="relative z-40 w-full pt-6 px-6 sm:px-10 pointer-events-none flex items-start justify-between">
+        <div className="relative z-40 w-full pt-4 sm:pt-6 px-4 sm:px-10 pointer-events-none flex items-start justify-between">
 
-          {/* Left Headline (Styled with Build Beyond The Screen Font & Typography) */}
+          {/* Left Headline */}
           <div className="pointer-events-auto max-w-xl">
             <h2
               className="text-2xl sm:text-4xl lg:text-[44px] uppercase select-none leading-[0.92] tracking-[-0.045em] drop-shadow-[0_0_20px_rgba(0,0,0,0.8)]"

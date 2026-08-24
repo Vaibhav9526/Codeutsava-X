@@ -94,10 +94,10 @@ export const WindowsXPDialog: React.FC<WindowsXPDialogProps> = ({
     <div
       style={style}
       className={`
-        relative rounded-t-lg rounded-b-none overflow-hidden select-none
+        relative rounded-t-lg rounded-b-none overflow-hidden select-none flex flex-col
         border-[3px] border-[#0055EA] shadow-[0_15px_40px_rgba(0,0,0,0.8),0_0_20px_rgba(153,41,234,0.3)]
         bg-[#ECE9D8] text-[#111111] font-sans
-        ${isFloatingModal ? 'w-[92vw] max-w-[580px] z-50 cursor-grab active:cursor-grabbing' : 'w-full'}
+        ${isFloatingModal ? 'w-[95vw] sm:w-[92vw] max-w-[580px] max-h-[88vh] z-50 cursor-grab active:cursor-grabbing' : 'w-full'}
         ${isExiting ? 'card-glitch-disintegrate' : isMaterializing ? 'card-glitch-materialize' : ''}
         ${isGlitching ? 'animate-glitch' : ''}
         ${className}
@@ -105,7 +105,7 @@ export const WindowsXPDialog: React.FC<WindowsXPDialogProps> = ({
     >
       {/* WINDOWS XP BLUE HEADER BAR */}
       <div
-        className="relative h-8 px-2 flex items-center justify-between overflow-hidden cursor-move border-b border-[#0038A8]"
+        className="relative h-8 px-2 flex items-center justify-between overflow-hidden cursor-move border-b border-[#0038A8] shrink-0"
         style={{
           background: 'linear-gradient(180deg, #0058EE 0%, #3593FF 10%, #288EFF 25%, #0055EA 90%, #0046D5 100%)'
         }}
@@ -127,7 +127,7 @@ export const WindowsXPDialog: React.FC<WindowsXPDialogProps> = ({
             )}
           </div>
           <span
-            className="text-[12px] font-bold text-white tracking-wide truncate drop-shadow-[1px_1px_1px_#09265B]"
+            className="text-[11px] sm:text-[12px] font-bold text-white tracking-wide truncate drop-shadow-[1px_1px_1px_#09265B]"
             style={{ fontFamily: '"Tahoma", "Segoe UI", sans-serif' }}
           >
             {event.xpFileName} - Codeutsava XP
@@ -169,7 +169,7 @@ export const WindowsXPDialog: React.FC<WindowsXPDialogProps> = ({
       </div>
 
       {/* WINDOWS XP CLASSIC MENU STRIP */}
-      <div className="h-6 bg-[#ECE9D8] border-b border-[#D0CCB8] px-2 flex items-center gap-3 text-[11px] text-[#222222] font-sans">
+      <div className="h-6 bg-[#ECE9D8] border-b border-[#D0CCB8] px-2 flex items-center gap-3 text-[11px] text-[#222222] font-sans shrink-0 overflow-x-auto">
         <button
           onClick={() => { retroAudio.playXPClick(); setActiveTab('details'); }}
           className={`px-1.5 py-0.5 rounded-sm hover:bg-[#316AC5] hover:text-white cursor-pointer transition-colors ${activeTab === 'details' ? 'font-bold' : ''}`}
@@ -203,7 +203,7 @@ export const WindowsXPDialog: React.FC<WindowsXPDialogProps> = ({
       </div>
 
       {/* MAIN INNER DIALOG CONTENT (NOTEPAD / CYBER RETRO) */}
-      <div className="p-3.5 bg-[#0D0B18] text-white font-mono min-h-[260px] relative overflow-hidden border-2 border-inset border-[#808080]">
+      <div className="p-3 sm:p-3.5 bg-[#0D0B18] text-white font-mono min-h-[220px] max-h-[62vh] overflow-y-auto relative border-2 border-inset border-[#808080] flex-1">
 
         {/* Subtle Cyber Grid Background in Notepad */}
         <div
@@ -216,15 +216,15 @@ export const WindowsXPDialog: React.FC<WindowsXPDialogProps> = ({
 
         {/* Top Diagnostics Header */}
         <div className="flex items-center justify-between pb-2 mb-2.5 border-b border-white/10 text-[10px] text-gray-400">
-          <div className="flex items-center gap-1.5">
-            <span className="inline-block w-2 h-2 rounded-full animate-ping" style={{ backgroundColor: laneColor }} />
+          <div className="flex items-center gap-1.5 truncate pr-2">
+            <span className="inline-block w-2 h-2 rounded-full animate-ping shrink-0" style={{ backgroundColor: laneColor }} />
             <span className="font-bold text-white tracking-wider">{event.stageCode}</span>
             <span className="text-gray-500">|</span>
-            <span className="text-gray-300">{event.memoryAddress}</span>
+            <span className="text-gray-300 truncate">{event.memoryAddress}</span>
           </div>
 
           <div
-            className="px-2 py-0.5 rounded text-[9px] font-black uppercase tracking-wider"
+            className="px-2 py-0.5 rounded text-[9px] font-black uppercase tracking-wider shrink-0"
             style={{
               backgroundColor: `${laneColor}20`,
               color: laneColor,
@@ -250,7 +250,7 @@ export const WindowsXPDialog: React.FC<WindowsXPDialogProps> = ({
               </div>
 
               <h3
-                className="text-lg sm:text-xl font-black tracking-tight text-white flex items-center gap-2"
+                className="text-base sm:text-xl font-black tracking-tight text-white flex items-center gap-2"
                 style={{ textShadow: `0 0 15px ${laneColor}60` }}
               >
                 {event.title}
@@ -260,12 +260,12 @@ export const WindowsXPDialog: React.FC<WindowsXPDialogProps> = ({
             {/* Date & Time Capsule */}
             <div className="flex flex-wrap items-center gap-2 py-1.5 px-2.5 rounded bg-white/5 border border-white/10 text-xs">
               <div className="flex items-center gap-1.5 text-[#FFE279]">
-                <Calendar className="w-3.5 h-3.5" />
+                <Calendar className="w-3.5 h-3.5 shrink-0" />
                 <span className="font-bold">{event.date}</span>
               </div>
               <span className="text-gray-500">•</span>
               <div className="flex items-center gap-1.5 text-[#FF5FCF]">
-                <Clock className="w-3.5 h-3.5" />
+                <Clock className="w-3.5 h-3.5 shrink-0" />
                 <span>{event.time}</span>
               </div>
               <div className="ml-auto">
@@ -281,7 +281,7 @@ export const WindowsXPDialog: React.FC<WindowsXPDialogProps> = ({
 
             {/* Description Text with Notepad look */}
             <div className="p-2.5 rounded bg-black/40 border border-white/10 text-[12px] leading-relaxed text-gray-200">
-              <p className="font-sans text-[13px]">{event.description}</p>
+              <p className="font-sans text-[12px] sm:text-[13px]">{event.description}</p>
             </div>
 
             {/* Event Key Protocols */}
@@ -319,7 +319,7 @@ export const WindowsXPDialog: React.FC<WindowsXPDialogProps> = ({
         {activeTab === 'diagnostics' && (
           <div className="text-[11px] text-purple-300 bg-black/70 p-3 rounded border border-purple-500/30 space-y-2">
             <p className="font-bold text-white">System Diagnostics (Windows XP x Codeutsava)</p>
-            <div className="grid grid-cols-2 gap-2 text-[10px]">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-[10px]">
               <div className="bg-white/5 p-1.5 rounded">
                 <span className="text-gray-400">Total Teams:</span>
                 <p className="text-white font-bold">2,500+ Registered</p>
@@ -386,7 +386,7 @@ export const WindowsXPDialog: React.FC<WindowsXPDialogProps> = ({
       </div>
 
       {/* WINDOWS XP BOTTOM STATUS BAR */}
-      <div className="h-5 bg-[#ECE9D8] border-t border-[#D0CCB8] px-2 flex items-center justify-between text-[10px] text-[#444444] font-sans">
+      <div className="h-5 bg-[#ECE9D8] border-t border-[#D0CCB8] px-2 flex items-center justify-between text-[10px] text-[#444444] font-sans shrink-0">
         <div className="flex items-center gap-3">
           <span className="border-r border-[#D0CCB8] pr-2">Stage {event.stageNumber} of 12</span>
           <span className="border-r border-[#D0CCB8] pr-2 hidden sm:inline">{event.phaseCode}</span>
