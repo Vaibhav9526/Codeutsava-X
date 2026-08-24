@@ -44,7 +44,10 @@ function ScrambleGlitchText({
   const [displayText, setDisplayText] = useState(text);
 
   useEffect(() => {
-    if (!isHovered) return;
+    if (!isHovered) {
+      setDisplayText(text);
+      return;
+    }
 
     const interval = setInterval(() => {
       const scrambled = text
@@ -70,8 +73,27 @@ export function ShortlistedTeams() {
   const [openedSlots, setOpenedSlots] = useState<Record<number, boolean>>({});
   const [openingSlots, setOpeningSlots] = useState<Record<number, boolean>>({});
   const [hoveredSlot, setHoveredSlot] = useState<number | null>(null);
+  const [isTouchDevice, setIsTouchDevice] = useState(false);
+
+  useEffect(() => {
+    const checkTouch = () => {
+      setIsTouchDevice(
+        'ontouchstart' in window ||
+        navigator.maxTouchPoints > 0 ||
+        window.innerWidth < 768
+      );
+    };
+    checkTouch();
+    window.addEventListener('resize', checkTouch);
+    return () => window.removeEventListener('resize', checkTouch);
+  }, []);
 
   const toggleSlot = (id: number) => {
+    // Clear hover state on touch / mobile so text doesn't stay stuck in permanent glitch
+    if (isTouchDevice) {
+      setHoveredSlot(null);
+    }
+
     if (openedSlots[id]) {
       // Re-seal this slot
       setOpenedSlots((prev) => ({ ...prev, [id]: false }));
@@ -85,7 +107,8 @@ export function ShortlistedTeams() {
     setTimeout(() => {
       setOpeningSlots((prev) => ({ ...prev, [id]: false }));
       setOpenedSlots((prev) => ({ ...prev, [id]: true }));
-    }, 400);
+      if (isTouchDevice) setHoveredSlot(null);
+    }, 350);
   };
 
   const unlockAll = () => {
@@ -94,10 +117,12 @@ export function ShortlistedTeams() {
       allOpened[slot.id] = true;
     });
     setOpenedSlots(allOpened);
+    if (isTouchDevice) setHoveredSlot(null);
   };
 
   const resealAll = () => {
     setOpenedSlots({});
+    if (isTouchDevice) setHoveredSlot(null);
   };
 
   const openedCount = Object.values(openedSlots).filter(Boolean).length;
@@ -110,7 +135,7 @@ export function ShortlistedTeams() {
           <span className={styles.eyebrowDot} />
           CYBERNETIC DATA VAULT // X.0
         </p>
-        <h2 id="shortlist-title" data-text="TEAMS   SHORTLISTED">TEAMS   SHORTLISTED</h2>
+        <h2 id="shortlist-title">TEAMS SHORTLISTED</h2>
       </div>
 
       {/* Master Controls Bar */}
@@ -148,19 +173,19 @@ export function ShortlistedTeams() {
         </div>
       </div>
 
-      {/* 4-Column Single Row Grid of Rectangular Lootbox Cards */}
+      {/* Grid of Rectangular Lootbox Cards (3 Columns on Android/Mobile, 4 Columns on Desktop) */}
       <div className={styles.slotsGrid}>
         {SHORTLISTED_SLOTS.map((slot) => {
           const isOpen = Boolean(openedSlots[slot.id]);
           const isOpening = Boolean(openingSlots[slot.id]);
-          const isHovered = hoveredSlot === slot.id;
+          const isHovered = !isTouchDevice && hoveredSlot === slot.id;
 
           return (
             <div
               key={slot.id}
               className={`${styles.slotCard} ${isHovered ? styles.slotCardHovered : ''}`}
               onClick={() => toggleSlot(slot.id)}
-              onMouseEnter={() => setHoveredSlot(slot.id)}
+              onMouseEnter={() => !isTouchDevice && setHoveredSlot(slot.id)}
               onMouseLeave={() => setHoveredSlot(null)}
               role="button"
               tabIndex={0}

@@ -170,6 +170,7 @@ export function Navbar({ variant = "default" }: { variant?: "default" | "back-to
                   alt="CodeUtsava Logo"
                   width={52}
                   height={52}
+                  unoptimized
                   className="w-[52px] h-[52px] object-contain drop-shadow-[0_0_8px_rgba(255,95,207,0.5)]"
                 />
               </a>
@@ -207,6 +208,7 @@ export function Navbar({ variant = "default" }: { variant?: "default" | "back-to
                 alt="CodeUtsava Logo"
                 width={44}
                 height={44}
+                unoptimized
                 className="w-[44px] h-[44px] object-contain drop-shadow-[0_0_8px_rgba(255,95,207,0.5)]"
               />
             </a>

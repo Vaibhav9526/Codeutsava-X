@@ -15,8 +15,8 @@ export function CyberLootboxIcon({ isOpen, isOpening, isHovered }: CyberLootboxI
     <div
       style={{
         position: 'relative',
-        width: '54px',
-        height: '54px',
+        width: 'clamp(26px, 5.5vw, 54px)',
+        height: 'clamp(26px, 5.5vw, 54px)',
         display: 'grid',
         placeItems: 'center',
         filter: isHovered
@@ -100,51 +100,54 @@ export function CyberLootboxIcon({ isOpen, isOpening, isHovered }: CyberLootboxI
             <circle cx="32" cy="54" r="1.8" fill="#ff5fcf" />
           </g>
         ) : (
-          /* ================= CLOSED CYBER CHEST ================= */
+          /* ================= UNOPENED CYBER CHEST ================= */
           <g>
-            {/* Base Body */}
+            {/* Top Lid Face (Diamond / Isometric Top) */}
             <polygon
-              points="32,30 52,20 52,42 32,52"
-              fill="rgba(20, 5, 36, 0.92)"
-              stroke={primaryStroke}
-              strokeWidth="1.6"
-            />
-            <polygon
-              points="32,30 12,20 12,42 32,52"
-              fill="rgba(10, 2, 20, 0.92)"
-              stroke={secondaryStroke}
-              strokeWidth="1.6"
-            />
-            {/* Top Lid */}
-            <polygon
-              points="32,10 52,20 32,30 12,20"
+              points="32,12 52,22 32,32 12,22"
               fill={accentFill}
-              stroke="#faeb92"
-              strokeWidth="1.6"
-            />
-
-            {/* Geometric Trim Lines */}
-            <line x1="32" y1="10" x2="32" y2="52" stroke={primaryStroke} strokeWidth="1.4" strokeDasharray="3 2" />
-            <line x1="12" y1="20" x2="52" y2="20" stroke={secondaryStroke} strokeWidth="1.2" opacity="0.8" />
-
-            {/* Golden Lock Emblem */}
-            <rect
-              x="29"
-              y="26"
-              width="6"
-              height="8"
-              rx="1"
-              fill="#05020a"
               stroke="#faeb92"
               strokeWidth="1.4"
             />
-            <circle cx="32" cy="29" r="1" fill={isHovered ? '#ff5fcf' : '#faeb92'} />
 
-            {/* Neon Corner Accents */}
-            <circle cx="32" cy="10" r="1.8" fill="#faeb92" />
-            <circle cx="12" cy="20" r="1.8" fill="#ff5fcf" />
-            <circle cx="52" cy="20" r="1.8" fill="#9929ea" />
-            <circle cx="32" cy="52" r="2" fill="#faeb92" />
+            {/* Left Box Face */}
+            <polygon
+              points="12,22 32,32 32,54 12,44"
+              fill="rgba(15, 3, 26, 0.92)"
+              stroke={secondaryStroke}
+              strokeWidth="1.5"
+            />
+
+            {/* Right Box Face */}
+            <polygon
+              points="32,32 52,22 52,44 32,54"
+              fill="rgba(25, 5, 42, 0.92)"
+              stroke={primaryStroke}
+              strokeWidth="1.5"
+            />
+
+            {/* Neon Accent Seam Line */}
+            <line x1="32" y1="32" x2="32" y2="54" stroke="#faeb92" strokeWidth="1.2" strokeDasharray="3 2" />
+
+            {/* Futuristic Chest Corner Nodes */}
+            <circle cx="32" cy="12" r="1.8" fill="#ff5fcf" />
+            <circle cx="52" cy="22" r="1.8" fill="#faeb92" />
+            <circle cx="12" cy="22" r="1.8" fill="#faeb92" />
+            <circle cx="32" cy="32" r="1.8" fill="#ffffff" />
+            <circle cx="32" cy="54" r="2" fill="#ff5fcf" />
+
+            {/* Center Cyber Lock Indicator */}
+            <rect
+              x="29.5"
+              y="29.5"
+              width="5"
+              height="6.5"
+              rx="1"
+              fill="#080210"
+              stroke="#faeb92"
+              strokeWidth="1.2"
+            />
+            <circle cx="32" cy="32.5" r="0.9" fill="#ff5fcf" />
           </g>
         )}
       </svg>
